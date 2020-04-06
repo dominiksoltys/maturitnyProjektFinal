@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "882064941035",
+    "firebase_url": "https://maturitnyprojektfinal.firebaseio.com",
+    "project_id": "maturitnyprojektfinal",
+    "storage_bucket": "maturitnyprojektfinal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882064941035:android:6ceeaf611edc2543af43ae",
+        "android_client_info": {
+          "package_name": "com.example.maturitnyprojektfinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882064941035-eku8kgfqip3pioero1gtgfbpueemmso2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.maturitnyprojektfinal",
+            "certificate_hash": "9979c769291c1045a981917d7d368b35586a6bf2"
+          }
+        },
+        {
+          "client_id": "882064941035-q89en3940nn0qengi3hafn8neleuh243.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-VxWrnA8TISg_2V6q6aK5jFovGGEIYak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882064941035-q89en3940nn0qengi3hafn8neleuh243.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
