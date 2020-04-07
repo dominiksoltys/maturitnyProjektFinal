@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:fontFamily="monospace"
-        android:text="Vytvoriť nový účet"
+        android:text="Prihlasenie sa"
         android:textColor="@color/colorAccent"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,6 +89,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/amiko"
         android:text="Chcem vytvorit účet."
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
@@ -103,5 +104,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="Zabudnuté heslo?"
+        android:textColor="@android:color/holo_red_dark"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
