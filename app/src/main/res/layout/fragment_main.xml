@@ -9,21 +9,23 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BLA BLA NAKUPNY KOSIK"
+        android:layout_marginBottom="32dp"
+        android:text="Aplikacia Shopping cart"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="186dp"
-        android:layout_height="262dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cart" />
+        app:srcCompat="@drawable/cart_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
