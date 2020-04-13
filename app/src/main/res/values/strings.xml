@@ -2,4 +2,28 @@
     <string name="app_name">maturitnyProjektFinal</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string-array name="NazvyZoznamov">
+        <item>Zoznam1</item>
+        <item>Zoznam2</item>
+        <item>Zoznam3</item>
+        <item>Zoznam4</item>
+        <item>Zoznam5</item>
+        <item>Zoznam6</item>
+        <item>Zoznam7</item>
+        <item>Zoznam8</item>
+        <item>Zoznam9</item>
+        <item>Zoznam0</item>
+    </string-array>
+    <string-array name="CenyZoznamov">
+        <item>123</item>
+        <item>234</item>
+        <item>345</item>
+        <item>456</item>
+        <item>567</item>
+        <item>678</item>
+        <item>789</item>
+        <item>890</item>
+        <item>901</item>
+        <item>012</item>
+    </string-array>
 </resources>
