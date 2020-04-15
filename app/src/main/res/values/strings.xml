@@ -9,10 +9,14 @@
         <item>Zoznam4</item>
         <item>Zoznam5</item>
         <item>Zoznam6</item>
-        <item>Zoznam7</item>
-        <item>Zoznam8</item>
-        <item>Zoznam9</item>
-        <item>Zoznam0</item>
+    </string-array>
+    <string-array name="PocetVZozname">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
     </string-array>
     <string-array name="CenyZoznamov">
         <item>123</item>
@@ -21,9 +25,41 @@
         <item>456</item>
         <item>567</item>
         <item>678</item>
-        <item>789</item>
-        <item>890</item>
-        <item>901</item>
-        <item>012</item>
+    </string-array>
+    <string-array name="NazvyProduktov">
+        <item>Produkt1</item>
+        <item>Produkt2</item>
+        <item>Produkt3</item>
+        <item>Produkt4</item>
+        <item>Produkt5</item>
+        <item>Produkt6</item>
+        <item>Produkt7</item>
+        <item>Produkt8</item>
+        <item>Produkt9</item>
+        <item>Produkt0</item>
+    </string-array>
+    <string-array name="PocetProduktov">
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+    </string-array>
+    <string-array name="CenyProduktov">
+        <item>Cena1</item>
+        <item>Cena2</item>
+        <item>Cena3</item>
+        <item>Cena4</item>
+        <item>Cena5</item>
+        <item>Cena6</item>
+        <item>Cena7</item>
+        <item>Cena8</item>
+        <item>Cena9</item>
+        <item>Cena0</item>
     </string-array>
 </resources>

@@ -8,10 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class RecyclerActivity extends AppCompatActivity {
+public class RecyclerZoznamy extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    String s1[], i1[];
+    String s1[], s2[], s3[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +21,10 @@ public class RecyclerActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyclerView);
 
         s1=getResources().getStringArray(R.array.NazvyZoznamov);
-        i1=getResources().getStringArray(R.array.CenyZoznamov);
+        s2=getResources().getStringArray(R.array.PocetVZozname);
+        s3=getResources().getStringArray(R.array.CenyZoznamov);
 
-        RecAdapter recAdapter = new RecAdapter(this, s1, i1);
+        RecAdapter recAdapter = new RecAdapter(this, s1, s2, s3);
         recyclerView.setAdapter(recAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
