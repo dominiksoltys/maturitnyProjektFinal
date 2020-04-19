@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
     android:id="@+id/recLayout">
 
 
@@ -24,9 +25,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Nazov zoznamu"
+                android:maxLines="1"
+                android:text="Nazov "
                 android:textSize="30dp"
                 android:textStyle="bold"
+                android:textAlignment="textStart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

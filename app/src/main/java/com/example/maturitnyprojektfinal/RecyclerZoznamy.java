@@ -8,28 +8,39 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class RecyclerZoznamy extends AppCompatActivity {
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
-    RecyclerView recyclerView;
-    String s1[], s2[], s3[];
+public class RecyclerZoznamy extends AppCompatActivity {
+    public FirebaseFirestore db= FirebaseFirestore.getInstance();
+    public CollectionReference recyclerRef = db.collection("zoznamy");
+
+    public RecAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view);
 
-        recyclerView=findViewById(R.id.recyclerView);
-
-        s1=getResources().getStringArray(R.array.NazvyZoznamov);
-        s2=getResources().getStringArray(R.array.PocetVZozname);
-        s3=getResources().getStringArray(R.array.CenyZoznamov);
-
-        RecAdapter recAdapter = new RecAdapter(this, s1, s2, s3);
-        recyclerView.setAdapter(recAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setUpRecyclerView();
     }
 
-    public void nazad(View view) {
+    public void setUpRecyclerView(){
+        Query query = recyclerRef.orderBy("Nazov", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<RecDaco> options = new FirestoreRecyclerOptions.Builder<RecDaco>().setQuery(query, RecDaco.class).build();
+
+        adapter = new RecAdapter(options);
+        RecyclerView recyclerView= findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+    }
+
+
+    public void back(View view) {
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
     }
 }
