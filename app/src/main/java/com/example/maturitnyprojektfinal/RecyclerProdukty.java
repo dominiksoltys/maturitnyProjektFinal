@@ -8,7 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class RecyclerZoznamy extends AppCompatActivity {
+
+public class RecyclerProdukty extends AppCompatActivity {
 
     RecyclerView recyclerView;
     String s1[], s2[], s3[];
@@ -20,9 +21,9 @@ public class RecyclerZoznamy extends AppCompatActivity {
 
         recyclerView=findViewById(R.id.recyclerView);
 
-        s1=getResources().getStringArray(R.array.NazvyZoznamov);
-        s2=getResources().getStringArray(R.array.PocetVZozname);
-        s3=getResources().getStringArray(R.array.CenyZoznamov);
+        s1=getResources().getStringArray(R.array.NazvyProduktov);
+        s2=getResources().getStringArray(R.array.PocetProduktov);
+        s3=getResources().getStringArray(R.array.CenyProduktov);
 
         RecAdapter recAdapter = new RecAdapter(this, s1, s2, s3);
         recyclerView.setAdapter(recAdapter);
