@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:background="@drawable/androidbg"
+    android:layout_height="170dp"
+    android:background="@drawable/andbg"
     android:orientation="vertical">
 
     <TextView
@@ -12,26 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:fontFamily="@font/amaranth"
+        android:fontFamily="@font/actor"
         android:text="Príjemný nákup "
-        android:textColor="@color/colorAccent"
-        android:textSize="23sp"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="25sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:srcCompat="@drawable/ic_shopping_cart_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

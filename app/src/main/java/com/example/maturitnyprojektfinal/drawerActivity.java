@@ -59,6 +59,9 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
         if(menuItem.getItemId()== R.id.zoznamy){
             startActivity(new Intent(getApplicationContext(), RecyclerZoznamy.class));
         }
+        if(menuItem.getItemId()== R.id.map){
+            startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+        }
         if(menuItem.getItemId()== R.id.logout){
             FirebaseAuth.getInstance().signOut();//odhlasenie sa
             startActivity(new Intent(getApplicationContext(),Login.class));

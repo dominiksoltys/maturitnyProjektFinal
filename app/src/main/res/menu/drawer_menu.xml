@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="General">
+    <item android:title="Hlavne">
         <menu>
             <item
                 android:id="@+id/home"
@@ -11,19 +11,19 @@
                 android:id="@+id/zoznamy"
                 android:icon="@drawable/ic_folder_black_24dp"
                 android:title="Zoznamy nakupov" />
-        </menu>
-    </item>
-
-    <item android:title="SKRRR">
-        <menu>
-            <item
-                android:id="@+id/random"
-                android:icon="@drawable/ic_home_black_24dp"
-                android:title="IDK hocico" />
             <item
                 android:id="@+id/map"
                 android:icon="@drawable/ic_map_black_24dp"
                 android:title="Mapa" />
+        </menu>
+    </item>
+
+    <item android:title="Viac">
+        <menu>
+            <item
+                android:id="@+id/random"
+                android:icon="@drawable/ic_folder_shared_black_24dp"
+                android:title="Zdialane nakupy" />
             <item
                 android:id="@+id/logout"
                 android:icon="@drawable/ic_arrow_back_black_24dp"

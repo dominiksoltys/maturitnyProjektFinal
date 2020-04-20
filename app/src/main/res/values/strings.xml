@@ -62,4 +62,5 @@
         <item>Cena9</item>
         <item>Cena0</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -8,7 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class RecyclerZoznamy extends AppCompatActivity {
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    String userId;
 
     RecyclerView recyclerView;
     String s1[], s2[], s3[];
@@ -16,9 +22,16 @@ public class RecyclerZoznamy extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        userId = fAuth.getCurrentUser().getUid();
+
         setContentView(R.layout.activity_recycler_view);
 
         recyclerView=findViewById(R.id.recyclerView);
+
+
 
         s1=getResources().getStringArray(R.array.NazvyZoznamov);
         s2=getResources().getStringArray(R.array.PocetVZozname);
