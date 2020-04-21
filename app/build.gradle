@@ -36,4 +36,5 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha02'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.karumi:dexter:6.1.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 }

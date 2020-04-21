@@ -16,6 +16,7 @@
         android:ems="10"
         android:fontFamily="@font/amiko"
         android:hint="Meno, Priezvisko"
+        android:textColorHint="#ebe8e8"
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textColor="@color/cardview_light_background"
@@ -37,6 +38,7 @@
         android:ems="10"
         android:fontFamily="@font/amiko"
         android:hint="Email"
+        android:textColorHint="#ebe8e8"
         android:inputType="textEmailAddress"
         android:padding="10dp"
         android:textColor="@color/cardview_light_background"
@@ -55,6 +57,7 @@
         android:ems="10"
         android:fontFamily="@font/amiko"
         android:hint="Heslo"
+        android:textColorHint="#ebe8e8"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="@color/cardview_light_background"
@@ -72,8 +75,8 @@
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:fontFamily="@font/amiko"
-        android:hint="Tel.číslo
-"
+        android:hint="Tel.číslo"
+        android:textColorHint="#ebe8e8"
         android:inputType="textPhonetic"
         android:padding="10dp"
         android:textColor="@color/cardview_light_background"
@@ -99,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/amiko"
+        android:fontFamily="@font/aldrich"
         android:text="Mam ucet. Prihlasenie."
         android:textColor="@color/cardview_light_background"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,5 +129,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logogogo" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="6dp"
+        android:text="© 2020 Soltys,Malcovsky All Rights Reserved"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
