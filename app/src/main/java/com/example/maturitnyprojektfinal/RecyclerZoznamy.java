@@ -1,15 +1,27 @@
 package com.example.maturitnyprojektfinal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.example.maturitnyprojektfinal.pojo.Zoznam;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+
+import javax.annotation.Nullable;
 
 public class RecyclerZoznamy extends AppCompatActivity {
     FirebaseAuth fAuth;
@@ -17,7 +29,6 @@ public class RecyclerZoznamy extends AppCompatActivity {
     String userId;
 
     RecyclerView recyclerView;
-    String s1[], s2[], s3[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +42,32 @@ public class RecyclerZoznamy extends AppCompatActivity {
 
         recyclerView=findViewById(R.id.recyclerView);
 
-
-
-        s1=getResources().getStringArray(R.array.NazvyZoznamov);
-        s2=getResources().getStringArray(R.array.PocetVZozname);
-        s3=getResources().getStringArray(R.array.CenyZoznamov);
-
-        RecAdapter recAdapter = new RecAdapter(this, s1, s2, s3);
+        RecAdapter recAdapter = new RecAdapter();
         recyclerView.setAdapter(recAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        getData(recAdapter);
     }
+    
+    public void getData(final RecAdapter recAdapter){
+        fStore.collection("zoznamy").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e!=null){ Log.e("Yeet", e.getMessage()); }
+                else {
+                    ArrayList<Zoznam> listik = new ArrayList<>();
+                    for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
+                        String Nazov = snapshot.getString("Nazov");
+                        double Pocet = snapshot.getDouble("Pocet");
+                        double Cena = snapshot.getDouble("Cena");
 
+                        listik.add(new Zoznam(Nazov, Pocet, Cena));
+                    }
+                    recAdapter.setNewData(listik);
+                }
+            }
+        });
+    }
+    
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
     }
