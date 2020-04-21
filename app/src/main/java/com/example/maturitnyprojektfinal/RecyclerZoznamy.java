@@ -1,7 +1,6 @@
 package com.example.maturitnyprojektfinal;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,13 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.pojo.Zoznam;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-public class RecyclerZoznamy extends AppCompatActivity {
+public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZoznamClickListener{
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
@@ -42,7 +41,7 @@ public class RecyclerZoznamy extends AppCompatActivity {
 
         recyclerView=findViewById(R.id.recyclerView);
 
-        RecAdapter recAdapter = new RecAdapter();
+        RecAdapter recAdapter = new RecAdapter(this);
         recyclerView.setAdapter(recAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData(recAdapter);
@@ -60,7 +59,7 @@ public class RecyclerZoznamy extends AppCompatActivity {
                         double Pocet = snapshot.getDouble("Pocet");
                         double Cena = snapshot.getDouble("Cena");
 
-                        listik.add(new Zoznam(Nazov, Pocet, Cena));
+                        listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena));
                     }
                     recAdapter.setNewData(listik);
                 }
@@ -70,5 +69,10 @@ public class RecyclerZoznamy extends AppCompatActivity {
     
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
+    }
+
+    @Override
+    public void onZoznamClick(String ZID) {
+        Toast.makeText(this, ZID, Toast.LENGTH_LONG).show();
     }
 }
