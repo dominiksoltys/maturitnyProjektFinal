@@ -48,7 +48,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
     }
     
     public void getData(final RecAdapter recAdapter){
-        fStore.collection("zoznamy").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        fStore.collection("users").document(userId).collection("zoznamy").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e!=null){ Log.e("Yeet", e.getMessage()); }

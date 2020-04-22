@@ -56,8 +56,8 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
 
         void bindData (final Zoznam zoznam){
             TextNazov.setText(zoznam.getNazov());
-            TextPocet.setText(String.valueOf(zoznam.getPocet()));
-            TextCena.setText(String.valueOf(zoznam.getCena()));
+            TextPocet.setText("Pocet: "+String.valueOf(zoznam.getPocet()));
+            TextCena.setText("Cena: "+String.valueOf(zoznam.getCena()));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
