@@ -56,7 +56,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                     ArrayList<Zoznam> listik = new ArrayList<>();
                     for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
                         String Nazov = snapshot.getString("Nazov");
-                        double Pocet = snapshot.getDouble("Pocet");
+                        long Pocet = snapshot.getLong("Pocet");
                         double Cena = snapshot.getDouble("Cena");
 
                         listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena));
