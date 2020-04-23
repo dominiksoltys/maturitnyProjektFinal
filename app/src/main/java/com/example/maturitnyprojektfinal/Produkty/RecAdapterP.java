@@ -51,12 +51,13 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
             super(itemView);
             TextNazov = itemView.findViewById(R.id.Nazov_text);
             TextPocet = itemView.findViewById(R.id.Pocet_text);
+            TextCena = itemView.findViewById(R.id.Cena_text);
         }
 
         void bindData (final Produkt produkt){
             TextNazov.setText(produkt.getNazov());
-            TextPocet.setText("Pocet: "+String.valueOf(produkt.getPocet()));
-            TextCena.setText(" ");
+            TextPocet.setText("                               Pocet: "+String.valueOf(produkt.getPocet()));
+            TextCena.setText("");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
