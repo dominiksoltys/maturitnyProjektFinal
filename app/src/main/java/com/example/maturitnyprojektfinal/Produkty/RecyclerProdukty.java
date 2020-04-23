@@ -1,8 +1,4 @@
-package com.example.maturitnyprojektfinal;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.example.maturitnyprojektfinal.Produkty;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.maturitnyprojektfinal.Produkty.RecyclerProdukty;
+import com.example.maturitnyprojektfinal.R;
+import com.example.maturitnyprojektfinal.RecAdapter;
+import com.example.maturitnyprojektfinal.RecyclerZoznamy;
+import com.example.maturitnyprojektfinal.drawerActivity;
 import com.example.maturitnyprojektfinal.pojo.Zoznam;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
@@ -23,10 +22,15 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZoznamClickListener{
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.onProduktClickListener{
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
+    String ZID;
 
     RecyclerView recyclerView;
 
@@ -37,46 +41,45 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
+        ZID=getIntent().getStringExtra("ID");
 
         setContentView(R.layout.activity_recycler_view);
 
         recyclerView=findViewById(R.id.recyclerView);
 
-        RecAdapter recAdapter = new RecAdapter(this);
-        recyclerView.setAdapter(recAdapter);
+        RecAdapterP recAdapterP = new RecAdapterP(this);
+        recyclerView.setAdapter(recAdapterP);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        getData(recAdapter);
+        getData(recAdapterP);
     }
-    
-    public void getData(final RecAdapter recAdapter){
-        fStore.collection("users").document(userId).collection("zoznamy").addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+    public void getData(final RecAdapterP recAdapterP){
+        fStore.collection("users").document(userId).collection("zoznamy")
+                .document(ZID).collection("produkty")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e!=null){ Log.e("Yeet", e.getMessage()); }
                 else {
-                    ArrayList<Zoznam> listik = new ArrayList<>();
+                    ArrayList<Produkt> listik = new ArrayList<>();
                     for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
                         String Nazov = snapshot.getString("Nazov");
                         long Pocet = snapshot.getLong("Pocet");
-                        double Cena = snapshot.getDouble("Cena");
 
-                        listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena));
+                        listik.add(new Produkt(snapshot.getId(), Nazov, Pocet));
                     }
-                    recAdapter.setNewData(listik);
+                    recAdapterP.setNewProdukt(listik);
                 }
             }
         });
     }
-    
+
     public void nazad(View view) {
-        startActivity(new Intent(getApplicationContext(),drawerActivity.class));
+        startActivity(new Intent(getApplicationContext(), RecyclerZoznamy.class));
     }
 
     @Override
-    public void onZoznamClick(String ZID) {
-        Intent i = new Intent(getApplicationContext(), RecyclerProdukty.class);
-        i.putExtra("ID", ZID);
-        Toast.makeText(this, ZID, Toast.LENGTH_LONG).show();
-        startActivity(i);
+    public void onProduktClick(String PID) {
+        Toast.makeText(this, PID, Toast.LENGTH_LONG).show();
     }
 }

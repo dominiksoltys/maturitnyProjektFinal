@@ -38,6 +38,7 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
         <activity android:name=".RecyclerZoznamy" />
+        <activity android:name=".Produkty.RecyclerProdukty"/>
         <activity
             android:name=".drawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
