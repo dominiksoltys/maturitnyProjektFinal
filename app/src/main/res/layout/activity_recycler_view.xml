@@ -30,7 +30,7 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/custombutton"
         android:onClick="nazad"
-        android:text="nazad"
+        android:text="späť"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

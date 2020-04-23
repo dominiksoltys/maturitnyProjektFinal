@@ -45,19 +45,17 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
 
     public class ProduktViewHolder extends RecyclerView.ViewHolder{
 
-        TextView TextNazov, TextPocet, TextCena;
+        TextView TextNazov, TextPocet;
 
         public ProduktViewHolder(@NonNull View itemView, RecAdapterP.onProduktClickListener onProduktClickListener) {
             super(itemView);
             TextNazov = itemView.findViewById(R.id.Nazov_text);
             TextPocet = itemView.findViewById(R.id.Pocet_text);
-            TextCena = itemView.findViewById(R.id.Cena_text);
         }
 
         void bindData (final Produkt produkt){
             TextNazov.setText(produkt.getNazov());
-            TextPocet.setText("                               Pocet: "+String.valueOf(produkt.getPocet()));
-            TextCena.setText("");
+            TextPocet.setText("Pocet: "+String.valueOf(produkt.getPocet()));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
