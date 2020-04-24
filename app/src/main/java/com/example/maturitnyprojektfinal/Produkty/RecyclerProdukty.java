@@ -1,9 +1,11 @@
 package com.example.maturitnyprojektfinal.Produkty;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.R;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,6 +79,30 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
 
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(), RecyclerZoznamy.class));
+    }
+
+    public void pridat(View view) {
+        final EditText novyProdukt = new EditText(view.getContext());
+        final AlertDialog.Builder novyProduktDialog = new AlertDialog.Builder(view.getContext());
+        novyProduktDialog.setTitle("Pridanie produktu");
+        novyProduktDialog.setMessage("Zadajte názov produktu");
+        novyProduktDialog.setView(novyProdukt);
+
+        novyProduktDialog.setPositiveButton("Pridať", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String novyNazov = novyProdukt.getText().toString().trim();
+                Toast.makeText(RecyclerProdukty.this, novyNazov, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        novyProduktDialog.setNegativeButton("Zrusit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //zatvorenie dialogu,navrat do Profil.java
+            }
+        });
+        novyProduktDialog.create().show();
     }
 
     @Override

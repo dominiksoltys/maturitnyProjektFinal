@@ -1,18 +1,25 @@
 package com.example.maturitnyprojektfinal;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.Produkty.RecyclerProdukty;
 import com.example.maturitnyprojektfinal.pojo.Zoznam;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -27,8 +34,11 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
+    FirebaseUser user;
 
     RecyclerView recyclerView;
+
+    boolean isZoznam=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +46,14 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+        user =fAuth.getCurrentUser();
         userId = fAuth.getCurrentUser().getUid();
 
         setContentView(R.layout.activity_recycler_view);
 
         recyclerView=findViewById(R.id.recyclerView);
+
+        isZoznam=true;
 
         RecAdapter recAdapter = new RecAdapter(this);
         recyclerView.setAdapter(recAdapter);
@@ -71,6 +84,27 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
     }
+
+    public void pridat(View view){
+            final EditText novyZoznam = new EditText(view.getContext());
+            final AlertDialog.Builder novyZoznamDialog = new AlertDialog.Builder(view.getContext());
+            novyZoznamDialog.setTitle("Pridanie zoznamu");
+            novyZoznamDialog.setMessage("Zadajte názov zoznamu");
+            novyZoznamDialog.setView(novyZoznam);
+
+            novyZoznamDialog.setPositiveButton("Pridať", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String novyNazov = novyZoznam.getText().toString().trim();
+                    Toast.makeText(RecyclerZoznamy.this, novyNazov, Toast.LENGTH_SHORT).show();}
+            });
+
+            novyZoznamDialog.setNegativeButton("Zrusit", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {} //zatvorenie dialogu
+            });
+            novyZoznamDialog.create().show();
+        }
 
     @Override
     public void onZoznamClick(String ZID) {
