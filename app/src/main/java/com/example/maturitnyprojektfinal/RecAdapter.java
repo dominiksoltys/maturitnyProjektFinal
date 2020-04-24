@@ -62,7 +62,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onZoznamClickListener.onZoznamClick(zoznam.getZID());
+                    onZoznamClickListener.onZoznamClick(zoznam.getZID(), zoznam.getNazov());
                 }
             });
         }
@@ -70,6 +70,6 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
     }
 
     interface onZoznamClickListener {
-        void onZoznamClick(String ZID);
+        void onZoznamClick(String ZID, String Nazov);
     }
 }

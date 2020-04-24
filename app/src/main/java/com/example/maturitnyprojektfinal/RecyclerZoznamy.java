@@ -12,12 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.Produkty.RecyclerProdukty;
 import com.example.maturitnyprojektfinal.pojo.Zoznam;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
@@ -37,8 +36,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
     FirebaseUser user;
 
     RecyclerView recyclerView;
-
-    boolean isZoznam=true;
+    TextView TopNazov;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +50,8 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         setContentView(R.layout.activity_recycler_view);
 
         recyclerView=findViewById(R.id.recyclerView);
-
-        isZoznam=true;
+        TopNazov = findViewById(R.id.TopNazov);
+        TopNazov.setText("Vaše zoznamy");
 
         RecAdapter recAdapter = new RecAdapter(this);
         recyclerView.setAdapter(recAdapter);
@@ -100,7 +98,9 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String novyNazov = novyZoznam.getText().toString().trim();
-                    Toast.makeText(RecyclerZoznamy.this, novyNazov, Toast.LENGTH_SHORT).show();}
+                    Toast.makeText(RecyclerZoznamy.this, novyNazov, Toast.LENGTH_SHORT).show();
+                    //Toast treba replacnut za pridavanie do databazy
+                }
             });
 
             novyZoznamDialog.setNegativeButton("Zrusit", new DialogInterface.OnClickListener() {
@@ -110,10 +110,10 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
             novyZoznamDialog.create().show();
         }
     @Override
-    public void onZoznamClick(String ZID) {
+    public void onZoznamClick(String ZID, String Nazov) {
         Intent i = new Intent(getApplicationContext(), RecyclerProdukty.class);
         i.putExtra("ID", ZID);
-        Toast.makeText(this, ZID, Toast.LENGTH_LONG).show();
+        i.putExtra("Nazov", Nazov);
         startActivity(i);
     }
 }

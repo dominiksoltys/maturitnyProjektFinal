@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.R;
-import com.example.maturitnyprojektfinal.RecAdapter;
 import com.example.maturitnyprojektfinal.RecyclerZoznamy;
-import com.example.maturitnyprojektfinal.drawerActivity;
-import com.example.maturitnyprojektfinal.pojo.Zoznam;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,10 +30,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.onProduktClickListener{
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userId;
-    String ZID;
+    String userId, ZID;
 
     RecyclerView recyclerView;
+    TextView topNazov;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +46,8 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
 
         setContentView(R.layout.activity_recycler_view);
 
+        topNazov = findViewById(R.id.TopNazov);
+        topNazov.setText(getIntent().getStringExtra("Nazov"));
         recyclerView=findViewById(R.id.recyclerView);
 
         RecAdapterP recAdapterP = new RecAdapterP(this);
