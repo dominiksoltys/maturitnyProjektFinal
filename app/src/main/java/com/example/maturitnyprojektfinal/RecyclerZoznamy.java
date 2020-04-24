@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZoznamClickListener{
+public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZoznamClickListener {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
@@ -85,7 +85,11 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
     }
 
-    public void pridat(View view){
+    public void delete(View view){
+        Toast.makeText(this, "Zoznam bol vymazaný", Toast.LENGTH_SHORT).show();
+    }
+
+    public void add(View view){
             final EditText novyZoznam = new EditText(view.getContext());
             final AlertDialog.Builder novyZoznamDialog = new AlertDialog.Builder(view.getContext());
             novyZoznamDialog.setTitle("Pridanie zoznamu");
@@ -105,7 +109,6 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
             });
             novyZoznamDialog.create().show();
         }
-
     @Override
     public void onZoznamClick(String ZID) {
         Intent i = new Intent(getApplicationContext(), RecyclerProdukty.class);

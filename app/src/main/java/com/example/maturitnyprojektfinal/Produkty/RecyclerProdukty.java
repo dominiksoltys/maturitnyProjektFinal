@@ -81,7 +81,11 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         startActivity(new Intent(getApplicationContext(), RecyclerZoznamy.class));
     }
 
-    public void pridat(View view) {
+    public void delete(View view){
+        Toast.makeText(this, "Produkt odobraný", Toast.LENGTH_SHORT).show();
+    }
+
+    public void add(View view) {
         final EditText novyProdukt = new EditText(view.getContext());
         final AlertDialog.Builder novyProduktDialog = new AlertDialog.Builder(view.getContext());
         novyProduktDialog.setTitle("Pridanie produktu");
