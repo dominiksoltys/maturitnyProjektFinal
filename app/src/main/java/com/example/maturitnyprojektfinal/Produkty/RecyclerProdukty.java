@@ -93,6 +93,7 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
             public void onClick(DialogInterface dialog, int which) {
                 String novyNazov = novyProdukt.getText().toString().trim();
                 Toast.makeText(RecyclerProdukty.this, novyNazov, Toast.LENGTH_SHORT).show();
+
             }
         });
 

@@ -20,13 +20,18 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firestore.v1beta1.WriteResult;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -96,7 +101,17 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String novyNazov = novyZoznam.getText().toString().trim();
-                    Toast.makeText(RecyclerZoznamy.this, novyNazov, Toast.LENGTH_SHORT).show();}
+                    Toast.makeText(RecyclerZoznamy.this, novyNazov, Toast.LENGTH_SHORT).show();
+                    DocumentReference novyZoznam = fStore.collection("users").document(userId).collection("zoznamy").document();
+                    Map<String,Object> zoznamy = new HashMap<>();
+                    zoznamy.put("Nazov",novyNazov);
+                    zoznamy.put("Cena",0);
+                    zoznamy.put("Pocet",0);
+                    novyZoznam.set(zoznamy);
+                   //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
+
+
+                }
             });
 
             novyZoznamDialog.setNegativeButton("Zrusit", new DialogInterface.OnClickListener() {
