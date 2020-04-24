@@ -2,10 +2,13 @@ package com.example.maturitnyprojektfinal.Produkty;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
 
     RecyclerView recyclerView;
     TextView topNazov;
+    ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,8 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
 
         topNazov = findViewById(R.id.TopNazov);
         topNazov.setText(getIntent().getStringExtra("Nazov"));
-        recyclerView=findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
+        image = findViewById(R.id.recyclerImage);
 
         RecAdapterP recAdapterP = new RecAdapterP(this);
         recyclerView.setAdapter(recAdapterP);

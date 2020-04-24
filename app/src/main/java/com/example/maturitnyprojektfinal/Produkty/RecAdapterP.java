@@ -30,7 +30,7 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
     public ProduktViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.rec_row, parent, false);
-        return new ProduktViewHolder(view, onProduktClickListener);
+        return new ProduktViewHolder(view);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
 
         TextView TextNazov, TextPocet;
 
-        public ProduktViewHolder(@NonNull View itemView, RecAdapterP.onProduktClickListener onProduktClickListener) {
+        public ProduktViewHolder(@NonNull View itemView) {
             super(itemView);
             TextNazov = itemView.findViewById(R.id.Nazov_text);
             TextPocet = itemView.findViewById(R.id.Pocet_text);

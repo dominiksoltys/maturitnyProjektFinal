@@ -1,6 +1,5 @@
 package com.example.maturitnyprojektfinal;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,7 +10,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,14 +20,12 @@ import com.example.maturitnyprojektfinal.Produkty.RecyclerProdukty;
 import com.example.maturitnyprojektfinal.pojo.Zoznam;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firestore.v1beta1.WriteResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +40,8 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
     FirebaseUser user;
 
     RecyclerView recyclerView;
-    TextView TopNazov;
+    TextView topNazov;
+    ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +49,15 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-        user =fAuth.getCurrentUser();
+        user = fAuth.getCurrentUser();
         userId = fAuth.getCurrentUser().getUid();
 
         setContentView(R.layout.activity_recycler_view);
 
-        recyclerView=findViewById(R.id.recyclerView);
-        TopNazov = findViewById(R.id.TopNazov);
-        TopNazov.setText("Vaše zoznamy");
+        recyclerView = findViewById(R.id.recyclerView);
+        image = findViewById(R.id.recyclerImage);
+        topNazov = findViewById(R.id.TopNazov);
+        topNazov.setText("Vaše zoznamy");
 
         RecAdapter recAdapter = new RecAdapter(this);
         recyclerView.setAdapter(recAdapter);
@@ -88,7 +89,8 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
     }
 
-    public void delete(View view){
+    public void delete(String ZID){
+        fStore.collection("users").document(userId).collection("zoznamy").document(ZID).delete();
         Toast.makeText(this, "Zoznam bol vymazaný", Toast.LENGTH_SHORT).show();
     }
 
@@ -103,8 +105,6 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String novyNazov = novyZoznam.getText().toString().trim();
-                    Toast.makeText(RecyclerZoznamy.this, novyNazov, Toast.LENGTH_SHORT).show();
-<<<<<<< HEAD
                     DocumentReference novyZoznam = fStore.collection("users").document(userId).collection("zoznamy").document();
                     Map<String,Object> zoznamy = new HashMap<>();
                     zoznamy.put("Nazov",novyNazov);
@@ -112,11 +112,6 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                     zoznamy.put("Pocet",0);
                     novyZoznam.set(zoznamy);
                    //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
-
-
-=======
-                    //Toast treba replacnut za pridavanie do databazy
->>>>>>> 0fe821bc558d4be57960c45b4a80f6bf2b6a450e
                 }
             });
 
@@ -126,6 +121,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
             });
             novyZoznamDialog.create().show();
         }
+
     @Override
     public void onZoznamClick(String ZID, String Nazov) {
         Intent i = new Intent(getApplicationContext(), RecyclerProdukty.class);

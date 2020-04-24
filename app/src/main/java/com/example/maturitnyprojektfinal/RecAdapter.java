@@ -30,7 +30,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
     public RecViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.rec_row, parent, false);
-        return new RecViewHolder(view, onZoznamClickListener);
+        return new RecViewHolder(view);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
 
         TextView TextNazov, TextPocet, TextCena;
 
-        public RecViewHolder(@NonNull View itemView, onZoznamClickListener onZoznamClickListener) {
+        public RecViewHolder(@NonNull View itemView) {
             super(itemView);
             TextNazov = itemView.findViewById(R.id.Nazov_text);
             TextPocet = itemView.findViewById(R.id.Pocet_text);
