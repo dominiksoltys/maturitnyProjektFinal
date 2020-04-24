@@ -12,12 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.Produkty.RecyclerProdukty;
 import com.example.maturitnyprojektfinal.pojo.Zoznam;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -35,15 +34,14 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZoznamClickListener{
+public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZoznamClickListener {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
     FirebaseUser user;
 
     RecyclerView recyclerView;
-
-    boolean isZoznam=true;
+    TextView TopNazov;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +55,8 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         setContentView(R.layout.activity_recycler_view);
 
         recyclerView=findViewById(R.id.recyclerView);
-
-        isZoznam=true;
+        TopNazov = findViewById(R.id.TopNazov);
+        TopNazov.setText("Vaše zoznamy");
 
         RecAdapter recAdapter = new RecAdapter(this);
         recyclerView.setAdapter(recAdapter);
@@ -90,7 +88,11 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
     }
 
-    public void pridat(View view){
+    public void delete(View view){
+        Toast.makeText(this, "Zoznam bol vymazaný", Toast.LENGTH_SHORT).show();
+    }
+
+    public void add(View view){
             final EditText novyZoznam = new EditText(view.getContext());
             final AlertDialog.Builder novyZoznamDialog = new AlertDialog.Builder(view.getContext());
             novyZoznamDialog.setTitle("Pridanie zoznamu");
@@ -102,6 +104,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                 public void onClick(DialogInterface dialog, int which) {
                     String novyNazov = novyZoznam.getText().toString().trim();
                     Toast.makeText(RecyclerZoznamy.this, novyNazov, Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD
                     DocumentReference novyZoznam = fStore.collection("users").document(userId).collection("zoznamy").document();
                     Map<String,Object> zoznamy = new HashMap<>();
                     zoznamy.put("Nazov",novyNazov);
@@ -111,6 +114,9 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                    //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
 
 
+=======
+                    //Toast treba replacnut za pridavanie do databazy
+>>>>>>> 0fe821bc558d4be57960c45b4a80f6bf2b6a450e
                 }
             });
 
@@ -120,12 +126,11 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
             });
             novyZoznamDialog.create().show();
         }
-
     @Override
-    public void onZoznamClick(String ZID) {
+    public void onZoznamClick(String ZID, String Nazov) {
         Intent i = new Intent(getApplicationContext(), RecyclerProdukty.class);
         i.putExtra("ID", ZID);
-        Toast.makeText(this, ZID, Toast.LENGTH_LONG).show();
+        i.putExtra("Nazov", Nazov);
         startActivity(i);
     }
 }
