@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,6 +40,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
     RecyclerView recyclerView;
     TextView topNazov;
     ImageView image;
+    Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                         } else {
                             for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                                 String Nazov = snapshot.getId();
-                                long Pocet = 0;
+                                long Pocet = -1;
                                 boolean uzMame=false;
                                 for (Produkt y:zoznamlistik) {
                                     if (y.getNazov()==Nazov){
@@ -135,7 +137,6 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                     produkt.put("Pocet",novyPocet);
                     fStore.collection("users").document(userId).collection("zoznamy")
                             .document(ZID).collection("produkty").document().set(produkt);
-                    //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
                 }
             }
         });
