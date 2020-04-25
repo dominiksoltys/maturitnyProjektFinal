@@ -67,12 +67,13 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
                 @Override
                 public void onClick(View view) {
                     onZoznamClickListener.onZoznamClick(zoznam.getZID(), zoznam.getNazov());
+
                 }
             });
             mDeleteImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onZoznamClickListener.onDeleteClick("");
+                    onZoznamClickListener.onDeleteClick(zoznam.getZID());
                 }
             });
         }
