@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,7 +32,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZoznamClickListener {
+public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZoznamClickListener{
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
