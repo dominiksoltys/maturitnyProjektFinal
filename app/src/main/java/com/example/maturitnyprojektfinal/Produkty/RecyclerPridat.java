@@ -43,6 +43,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
     RecyclerView recyclerView;
     TextView topNazov;
     ImageView image;
+    ImageView imageDelete;
     Button btn;
 
     @Override
@@ -60,8 +61,11 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
         view = new View(this);
         topNazov = findViewById(R.id.TopNazov);
         topNazov.setText("Pridanie");
+        imageDelete=findViewById(R.id.imageDelete);
+        //imageDelete.setWillNotDraw(true); toto crashne apku :(
         recyclerView = findViewById(R.id.recyclerView);
         image = findViewById(R.id.recyclerImage);
+
 
         RecAdapterP recAdapterP = new RecAdapterP(this);
         recyclerView.setAdapter(recAdapterP);
@@ -70,7 +74,6 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
     }
     public void getData(final RecAdapterP recAdapterP) {
         final ArrayList<Produkt> zoznamlistik = new ArrayList<>();
-        final ArrayList<Produkt> listik = new ArrayList<>();
         fStore.collection("users").document(userId).collection("zoznamy")
                 .document(ZID).collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -86,6 +89,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                 }
             }
         });
+        final ArrayList<Produkt> listik = new ArrayList<>();
         fStore.collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -96,13 +100,14 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                                 String Nazov = snapshot.getId();
                                 long Pocet = -1;
                                 boolean uzMame=false;
-                                for (Produkt y:zoznamlistik) {
-                                    if (y.getNazov()==Nazov){
+                                for (Produkt p:zoznamlistik) {
+                                    if (p.getNazov().trim().equals(Nazov.trim())){
                                         uzMame=true;
+                                        break;
                                     }
                                 }
-                                if (uzMame==false)
-                                    listik.add(new Produkt(snapshot.getId(), Nazov, Pocet)); //Ziskanie udajov o vsetkych produktoch
+                                if (!uzMame){
+                                    listik.add(new Produkt(snapshot.getId(), Nazov, Pocet));} //Ziskanie udajov o vsetkych produktoch
                                 }
                             }
                             recAdapterP.setNewProdukt(listik);

@@ -107,9 +107,10 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     long novyPocet =Long.parseLong(zmenaProdukt.getText().toString().trim());
-                    fStore.collection("users").document(userId).collection("zoznamy")
+                    if (novyPocet<=0){Toast.makeText(RecyclerProdukty.this, "Zadajte číslo väčšie ako 0", Toast.LENGTH_LONG).show();}
+                    else {fStore.collection("users").document(userId).collection("zoznamy")
                             .document(ZID).collection("produkty").document(PID).update("Pocet", novyPocet);
-                    Toast.makeText(RecyclerProdukty.this, "Počet zmenený", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RecyclerProdukty.this, "Počet zmenený", Toast.LENGTH_SHORT).show();}
                 }
                 catch (NumberFormatException e){
                     Toast.makeText(RecyclerProdukty.this, "Musí byť číslo", Toast.LENGTH_SHORT).show();}
