@@ -2,6 +2,7 @@ package com.example.maturitnyprojektfinal.Produkty;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -127,10 +129,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
         novyProduktDialog.setPositiveButton("Pridať", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (novyProdukt.getText().toString().trim()=="idk"){  //tu treba dat ze ci je cislo
-                    Toast.makeText(RecyclerPridat.this, "Musí byť číslo", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                try {
                     long novyPocet =Long.parseLong(novyProdukt.getText().toString().trim());
                     Map<String,Object> produkt = new HashMap<>();
                     produkt.put("Nazov", PID);
@@ -138,11 +137,14 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                     produkt.put("Pocet",novyPocet);
                     fStore.collection("users").document(userId).collection("zoznamy")
                             .document(ZID).collection("produkty").document().set(produkt);
-                    Toast.makeText(RecyclerPridat.this, "Produkt/y pridany/e", Toast.LENGTH_SHORT).show();
-
-
-
+                    String ye;
+                    if (novyPocet==1) ye="Produkt pridaný";
+                    else ye="Produkty pridané";
+                    Toast.makeText(RecyclerPridat.this, ye, Toast.LENGTH_SHORT).show();
                 }
+                catch (NumberFormatException e){
+                Toast.makeText(RecyclerPridat.this, "Musí byť číslo", Toast.LENGTH_SHORT).show();}
+
             }
         });
 

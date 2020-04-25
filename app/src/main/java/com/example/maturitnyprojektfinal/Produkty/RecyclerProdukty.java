@@ -1,9 +1,11 @@
 package com.example.maturitnyprojektfinal.Produkty;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,9 +20,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +38,7 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
     RecyclerView recyclerView;
     TextView topNazov;
     ImageView image;
+    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,7 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
 
         setContentView(R.layout.activity_recycler_view);
 
+        view = new View (this);
         topNazov = findViewById(R.id.TopNazov);
         topNazov.setText(Nazov);
         recyclerView = findViewById(R.id.recyclerView);
@@ -88,9 +95,35 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
 
     }
     @Override
-    public void onProduktClick(String PID) {}  //nerobi nic
+    public void onProduktClick(final String PID) {
+        final EditText zmenaProdukt = new EditText(view.getContext());
+        final AlertDialog.Builder zmenaProduktDialog = new AlertDialog.Builder(view.getContext());
+        zmenaProduktDialog.setTitle("Zmena počtu");
+        zmenaProduktDialog.setMessage("Zadajte nový počet");
+        zmenaProduktDialog.setView(zmenaProdukt);
+
+        zmenaProduktDialog.setPositiveButton("Pridať", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    long novyPocet =Long.parseLong(zmenaProdukt.getText().toString().trim());
+                    fStore.collection("users").document(userId).collection("zoznamy")
+                            .document(ZID).collection("produkty").document(PID).update("Pocet", novyPocet);
+                    Toast.makeText(RecyclerProdukty.this, "Počet zmenený", Toast.LENGTH_SHORT).show();
+                }
+                catch (NumberFormatException e){
+                    Toast.makeText(RecyclerProdukty.this, "Musí byť číslo", Toast.LENGTH_SHORT).show();}
+            }
+        });
+        zmenaProduktDialog.setNegativeButton("Zrusit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {} //zatvorenie dialogu
+        });
+        zmenaProduktDialog.create().show();
+    }
     public void onDeleteClick(String PID) {
-        fStore.collection("users").document(userId).collection("zoznamy").document(ZID).collection("produkty").document(PID).delete();
+        fStore.collection("users").document(userId).collection("zoznamy")
+                .document(ZID).collection("produkty").document(PID).delete();
         Toast.makeText(this, "Produkt bol vymazaný", Toast.LENGTH_SHORT).show();
     }
 }
