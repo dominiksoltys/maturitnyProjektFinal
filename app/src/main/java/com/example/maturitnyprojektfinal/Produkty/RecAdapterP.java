@@ -48,13 +48,14 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
     public class ProduktViewHolder extends RecyclerView.ViewHolder{
 
         TextView TextNazov, TextPocet;
-        ImageView imageView;
+        ImageView imageView;public ImageView mDeleteImage;
 
         public ProduktViewHolder(@NonNull View itemView) {
             super(itemView);
             TextNazov = itemView.findViewById(R.id.Nazov_text);
             TextPocet = itemView.findViewById(R.id.Pocet_text);
             imageView = itemView.findViewById(R.id.recyclerImage);
+            mDeleteImage = itemView.findViewById(R.id.imageDelete);
         }
 
         void bindData (final Produkt produkt){
@@ -69,10 +70,17 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
                     onProduktClickListener.onProduktClick(produkt.getPID());
                 }
             });
+            mDeleteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onProduktClickListener.onDeleteClick(produkt.getPID());
+                }
+            });
         }
 
     }
     interface onProduktClickListener {
         void onProduktClick(String PID);
+        void onDeleteClick(String PID);
     }
 }

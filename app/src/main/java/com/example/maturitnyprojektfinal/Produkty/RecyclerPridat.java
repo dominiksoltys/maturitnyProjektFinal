@@ -28,7 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onProduktClickListener {
+public abstract class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onProduktClickListener {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, ZID, Nazov;
@@ -63,7 +63,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
     }
 
     public void getData(final RecAdapterP recAdapterP) {
-        fStore.collection("produkt").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        fStore.collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {

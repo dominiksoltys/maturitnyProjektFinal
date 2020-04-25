@@ -97,9 +97,14 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         i.putExtra("ZID", ZID);
         i.putExtra("Nazov", Nazov);
         startActivity(i);
+
     }
     @Override
     public void onProduktClick(String PID) {
         Toast.makeText(this, PID, Toast.LENGTH_LONG).show();
+    }
+    public void onDeleteClick(String PID) {
+        fStore.collection("users").document(userId).collection("zoznamy").document(ZID).collection("produkty").document(PID).delete();
+        Toast.makeText(this, "Produkt bol vymazaný", Toast.LENGTH_SHORT).show();
     }
 }
