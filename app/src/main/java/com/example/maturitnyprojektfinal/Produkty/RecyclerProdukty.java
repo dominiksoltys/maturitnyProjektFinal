@@ -55,6 +55,7 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         recyclerView = findViewById(R.id.recyclerView);
         image = findViewById(R.id.recyclerImage);
 
+
         RecAdapterP recAdapterP = new RecAdapterP(this);
         recyclerView.setAdapter(recAdapterP);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -1,8 +1,10 @@
 package com.example.maturitnyprojektfinal.Produkty;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.maturitnyprojektfinal.R;
@@ -46,16 +48,20 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
     public class ProduktViewHolder extends RecyclerView.ViewHolder{
 
         TextView TextNazov, TextPocet;
+        ImageView imageView;
 
         public ProduktViewHolder(@NonNull View itemView) {
             super(itemView);
             TextNazov = itemView.findViewById(R.id.Nazov_text);
             TextPocet = itemView.findViewById(R.id.Pocet_text);
+            imageView = itemView.findViewById(R.id.recyclerImage);
         }
 
         void bindData (final Produkt produkt){
             TextNazov.setText(produkt.getNazov());
             TextPocet.setText("Pocet: "+String.valueOf(produkt.getPocet()));
+            imageView.setImageResource(R.drawable.produkt_side);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
