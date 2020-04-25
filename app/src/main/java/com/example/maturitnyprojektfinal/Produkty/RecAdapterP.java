@@ -42,7 +42,8 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
     public class ProduktViewHolder extends RecyclerView.ViewHolder{
 
         TextView TextNazov, TextPocet;
-        ImageView imageView;public ImageView mDeleteImage;
+        ImageView imageView;
+        public ImageView mDeleteImage;
 
         public ProduktViewHolder(@NonNull View itemView) {
             super(itemView);

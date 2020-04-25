@@ -1,15 +1,18 @@
 package com.example.maturitnyprojektfinal.Produkty;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -17,14 +20,17 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public abstract class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onProduktClickListener {
+public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onProduktClickListener {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, ZID, Nazov;
@@ -58,21 +64,44 @@ public abstract class RecyclerPridat extends AppCompatActivity implements RecAda
         getData(recAdapterP);
     }
     public void getData(final RecAdapterP recAdapterP) {
+        final ArrayList<Produkt> zoznamlistik = new ArrayList<>();
+        final ArrayList<Produkt> listik = new ArrayList<>();
+        fStore.collection("users").document(userId).collection("zoznamy")
+                .document(ZID).collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.e("Chyba ", e.getMessage());
+                } else {
+                    for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                        String Nazov = snapshot.getString("Nazov");
+                        long Pocet = snapshot.getLong("Pocet");
+                        zoznamlistik.add(new Produkt(snapshot.getId(), Nazov, Pocet)); //Ziskanie udajov zo zoznamu
+                    }
+                }
+            }
+        });
         fStore.collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
                             Log.e("Chyba ", e.getMessage());
                         } else {
-                            ArrayList<Produkt> listik = new ArrayList<>();
                             for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                                 String Nazov = snapshot.getId();
-                                long Pocet = 10;
-                                listik.add(new Produkt(snapshot.getId(), Nazov, Pocet));
+                                long Pocet = 0;
+                                boolean uzMame=false;
+                                for (Produkt y:zoznamlistik) {
+                                    if (y.getNazov()==Nazov){
+                                        uzMame=true;
+                                    }
+                                }
+                                if (uzMame==false)
+                                    listik.add(new Produkt(snapshot.getId(), Nazov, Pocet)); //Ziskanie udajov o vsetkych produktoch
+                                }
                             }
                             recAdapterP.setNewProdukt(listik);
                         }
-                    }
                 });
     }
     public void nazad(View view) {
@@ -85,6 +114,39 @@ public abstract class RecyclerPridat extends AppCompatActivity implements RecAda
         Toast.makeText(this, "Stlač produkt pre pridanie", Toast.LENGTH_LONG).show();
     } //nebude tam
     @Override
-    public void onProduktClick(String PID) {
+    public void onProduktClick(final String PID) {
+        final EditText novyProdukt = new EditText(view.getContext());
+        final AlertDialog.Builder novyProduktDialog = new AlertDialog.Builder(view.getContext());
+        novyProduktDialog.setTitle(PID);
+        novyProduktDialog.setMessage("Zadajte počet");
+        novyProduktDialog.setView(novyProdukt);
+
+        novyProduktDialog.setPositiveButton("Pridať", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (novyProdukt.getText().toString().trim()=="idk"){  //tu treba dat ze ci je cislo
+                    Toast.makeText(RecyclerPridat.this, "Musí byť číslo", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    long novyPocet =Long.parseLong(novyProdukt.getText().toString().trim());
+                    Map<String,Object> produkt = new HashMap<>();
+                    produkt.put("Nazov", PID);
+                    produkt.put("Cena",0);
+                    produkt.put("Pocet",novyPocet);
+                    fStore.collection("users").document(userId).collection("zoznamy")
+                            .document(ZID).collection("produkty").document().set(produkt);
+                    //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
+                }
+            }
+        });
+
+        novyProduktDialog.setNegativeButton("Zrusit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {} //zatvorenie dialogu
+        });
+        novyProduktDialog.create().show();
     }
+
+    @Override
+    public void onDeleteClick(String PID) {} //tiez nebude tam
 }

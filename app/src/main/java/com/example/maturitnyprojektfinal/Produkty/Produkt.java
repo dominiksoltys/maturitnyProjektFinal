@@ -13,4 +13,5 @@ public class Produkt {
     public String getPID() { return PID; }
     public String getNazov() { return Nazov; }
     public long getPocet() { return Pocet; }
+    public void setPID(String PID) {PID = PID;}
 }

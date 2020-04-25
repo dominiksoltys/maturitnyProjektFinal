@@ -82,15 +82,13 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
     }
     public void add(View view) {
         Intent i = new Intent(getApplicationContext(), RecyclerPridat.class);
-        i.putExtra("ZID", ZID);
+        i.putExtra("ID", ZID);
         i.putExtra("Nazov", Nazov);
         startActivity(i);
 
     }
     @Override
-    public void onProduktClick(String PID) {
-        Toast.makeText(this, PID, Toast.LENGTH_LONG).show();
-    }
+    public void onProduktClick(String PID) {}  //nerobi nic
     public void onDeleteClick(String PID) {
         fStore.collection("users").document(userId).collection("zoznamy").document(ZID).collection("produkty").document(PID).delete();
         Toast.makeText(this, "Produkt bol vymazaný", Toast.LENGTH_SHORT).show();
