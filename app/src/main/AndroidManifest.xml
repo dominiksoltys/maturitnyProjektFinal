@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.maturitnyprojektfinal">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -16,11 +17,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@drawable/logoooo"
+        android:label="Nákupný košík"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -41,10 +43,18 @@
         <activity android:name=".Produkty.RecyclerProdukty"/>
         <activity
             android:name=".drawerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Profil" />
-        <activity android:name=".Login" />
-        <activity android:name=".Register">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity android:name=".Profil"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".Login"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity android:name=".Register"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

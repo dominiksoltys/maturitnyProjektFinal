@@ -24,7 +24,7 @@
         android:fontFamily="@font/aldrich"
         android:text="Vitajte v aplikacii nakupny kosik."
         android:textColor="@color/cardview_light_background"
-        android:textSize="20sp"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,8 @@
         android:fontFamily="@font/aldrich"
         android:text="Vy si vytvorite zoznam tovaru na nakup"
         android:textColor="@color/cardview_light_background"
-        android:textSize="20sp"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -73,7 +74,7 @@
         android:fontFamily="@font/aldrich"
         android:text="a my vam odporucime hypermarket,"
         android:textColor="@color/cardview_light_background"
-        android:textSize="20sp"
+        android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.326"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +88,7 @@
         android:fontFamily="@font/aldrich"
         android:text="v ktorom vas nakup vyjde "
         android:textColor="@color/cardview_light_background"
-        android:textSize="20sp"
+        android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -100,7 +101,7 @@
         android:fontFamily="@font/aldrich"
         android:text="najvyhodnejsie."
         android:textColor="@color/cardview_light_background"
-        android:textSize="20sp"
+        android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />

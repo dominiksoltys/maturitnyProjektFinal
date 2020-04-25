@@ -143,9 +143,10 @@ public class Profil extends AppCompatActivity {
         if(requestCode == 1000){
             if(resultCode == Activity.RESULT_OK){
                 Uri imageUri = data.getData();
-               // profileImage.setImageURI(imageUri);
+                //profileImage.setImageURI(imageUri);
 
                 uploadImageToFirebase(imageUri);
+                Toast.makeText(this, "Nacitanie novej fotky moze chvilku trvat,prosim pockajte", Toast.LENGTH_LONG).show();
 
             }
         }
