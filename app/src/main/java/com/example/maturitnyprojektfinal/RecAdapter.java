@@ -3,6 +3,7 @@ package com.example.maturitnyprojektfinal;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.maturitnyprojektfinal.pojo.Zoznam;
@@ -46,12 +47,15 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
     public class RecViewHolder extends RecyclerView.ViewHolder{
 
         TextView TextNazov, TextPocet, TextCena;
+        public ImageView mDeleteImage;
 
         public RecViewHolder(@NonNull View itemView) {
             super(itemView);
             TextNazov = itemView.findViewById(R.id.Nazov_text);
             TextPocet = itemView.findViewById(R.id.Pocet_text);
             TextCena = itemView.findViewById(R.id.Cena_text);
+            mDeleteImage = itemView.findViewById(R.id.imageDelete);
+
         }
 
         void bindData (final Zoznam zoznam){
@@ -65,11 +69,19 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
                     onZoznamClickListener.onZoznamClick(zoznam.getZID(), zoznam.getNazov());
                 }
             });
+            mDeleteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onZoznamClickListener.onDeleteClick("");
+                }
+            });
         }
+
 
     }
 
     interface onZoznamClickListener {
         void onZoznamClick(String ZID, String Nazov);
+        void onDeleteClick(String ZID);
     }
 }
