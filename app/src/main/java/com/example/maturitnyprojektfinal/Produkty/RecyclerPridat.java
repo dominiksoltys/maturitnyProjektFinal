@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,7 +57,6 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData(recAdapterP);
     }
-
     public void getData(final RecAdapterP recAdapterP) {
         fStore.collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -81,7 +81,9 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
         i.putExtra("Nazov", Nazov);
         startActivity(i);
     }
-    public void add(View view) {} //nebude tam
+    public void add(View view) {
+        Toast.makeText(this, "Stlač produkt pre pridanie", Toast.LENGTH_LONG).show();
+    } //nebude tam
     @Override
     public void onProduktClick(String PID) {
     }

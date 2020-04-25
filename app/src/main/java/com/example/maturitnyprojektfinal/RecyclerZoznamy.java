@@ -63,7 +63,6 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData(recAdapter);
     }
-    
     public void getData(final RecAdapter recAdapter){
         fStore.collection("users").document(userId).collection("zoznamy").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -83,11 +82,9 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
             }
         });
     }
-    
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
     }
-
     public void add(View view){
             final EditText novyZoznam = new EditText(view.getContext());
             final AlertDialog.Builder novyZoznamDialog = new AlertDialog.Builder(view.getContext());
@@ -123,7 +120,6 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
             });
             novyZoznamDialog.create().show();
         }
-
     @Override
     public void onZoznamClick(String ZID, String Nazov) {
         Intent i = new Intent(getApplicationContext(), RecyclerProdukty.class);
@@ -131,7 +127,6 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         i.putExtra("Nazov", Nazov);
         startActivity(i);
     }
-
     @Override
     public void onDeleteClick(String ZID) {
         fStore.collection("users").document(userId).collection("zoznamy").document(ZID).delete();

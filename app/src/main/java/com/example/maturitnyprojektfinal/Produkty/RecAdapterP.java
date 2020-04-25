@@ -20,12 +20,10 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
     public RecAdapterP(onProduktClickListener onProduktClickListener){
         this.onProduktClickListener=onProduktClickListener;
     }
-
     public void setNewProdukt(ArrayList<Produkt> listik){
         this.listik=listik;
         notifyDataSetChanged();
     }
-
     @NonNull
     @Override
     public ProduktViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,17 +31,14 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
         View view = inflater.inflate(R.layout.rec_row, parent, false);
         return new ProduktViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ProduktViewHolder holder, final int position) {
         holder.bindData(listik.get(position));
     }
-
     @Override
     public int getItemCount() {
         return listik.size();
     }
-
     public class ProduktViewHolder extends RecyclerView.ViewHolder{
 
         TextView TextNazov, TextPocet;

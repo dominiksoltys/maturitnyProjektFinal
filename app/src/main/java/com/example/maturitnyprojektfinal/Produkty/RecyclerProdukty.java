@@ -57,7 +57,6 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData(recAdapterP);
     }
-
     public void getData(final RecAdapterP recAdapterP){
         fStore.collection("users").document(userId).collection("zoznamy")
                 .document(ZID).collection("produkty")
@@ -78,11 +77,9 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
             }
         });
     }
-
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(), RecyclerZoznamy.class));
     }
-
     public void add(View view) {
         Intent i = new Intent(getApplicationContext(), RecyclerPridat.class);
         i.putExtra("ZID", ZID);
