@@ -1,6 +1,5 @@
 package com.example.maturitnyprojektfinal.Produkty;
 
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,6 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
             TextPocet = itemView.findViewById(R.id.Pocet_text);
             imageView = itemView.findViewById(R.id.recyclerImage);
         }
-
         void bindData (final Produkt produkt){
             TextNazov.setText(produkt.getNazov());
             TextPocet.setText("Pocet: "+String.valueOf(produkt.getPocet()));
@@ -70,7 +68,6 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
                 }
             });
         }
-
     }
     interface onProduktClickListener {
         void onProduktClick(String PID);

@@ -1,17 +1,13 @@
 package com.example.maturitnyprojektfinal.Produkty;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.R;
-import com.example.maturitnyprojektfinal.RecyclerZoznamy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,7 +19,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,7 +58,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
     }
 
     public void getData(final RecAdapterP recAdapterP) {
-        fStore.collection("produkt").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        fStore.collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
@@ -86,8 +81,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
         i.putExtra("Nazov", Nazov);
         startActivity(i);
     }
-    public void delete(View view) {}  //nemal by tam byť
-    public void add(View view) {} //tiež nebude tam
+    public void add(View view) {} //nebude tam
     @Override
     public void onProduktClick(String PID) {
     }

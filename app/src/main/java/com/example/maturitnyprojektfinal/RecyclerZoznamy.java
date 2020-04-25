@@ -88,11 +88,6 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
     }
 
-    public void delete(String ZID){
-        fStore.collection("users").document(userId).collection("zoznamy").document(ZID).delete();
-        Toast.makeText(this, "Zoznam bol vymazaný", Toast.LENGTH_SHORT).show();
-    }
-
     public void add(View view){
             final EditText novyZoznam = new EditText(view.getContext());
             final AlertDialog.Builder novyZoznamDialog = new AlertDialog.Builder(view.getContext());
