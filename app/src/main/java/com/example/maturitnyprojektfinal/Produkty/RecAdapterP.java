@@ -1,6 +1,5 @@
 package com.example.maturitnyprojektfinal.Produkty;
 
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +20,10 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
     public RecAdapterP(onProduktClickListener onProduktClickListener){
         this.onProduktClickListener=onProduktClickListener;
     }
-
     public void setNewProdukt(ArrayList<Produkt> listik){
         this.listik=listik;
         notifyDataSetChanged();
     }
-
     @NonNull
     @Override
     public ProduktViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,17 +31,14 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
         View view = inflater.inflate(R.layout.rec_row, parent, false);
         return new ProduktViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ProduktViewHolder holder, final int position) {
         holder.bindData(listik.get(position));
     }
-
     @Override
     public int getItemCount() {
         return listik.size();
     }
-
     public class ProduktViewHolder extends RecyclerView.ViewHolder{
 
         TextView TextNazov, TextPocet;
@@ -57,7 +51,6 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
             imageView = itemView.findViewById(R.id.recyclerImage);
             mDeleteImage = itemView.findViewById(R.id.imageDelete);
         }
-
         void bindData (final Produkt produkt){
             TextNazov.setText(produkt.getNazov());
             TextPocet.setText("Pocet: "+String.valueOf(produkt.getPocet()));
@@ -77,7 +70,6 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
                 }
             });
         }
-
     }
     interface onProduktClickListener {
         void onProduktClick(String PID);

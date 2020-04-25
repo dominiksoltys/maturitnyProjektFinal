@@ -1,13 +1,9 @@
 package com.example.maturitnyprojektfinal.Produkty;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +21,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,7 +57,6 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData(recAdapterP);
     }
-
     public void getData(final RecAdapterP recAdapterP){
         fStore.collection("users").document(userId).collection("zoznamy")
                 .document(ZID).collection("produkty")
@@ -83,15 +77,9 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
             }
         });
     }
-
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(), RecyclerZoznamy.class));
     }
-
-    public void delete(View view){
-        Toast.makeText(this, "Produkt odobraný", Toast.LENGTH_SHORT).show();
-    }
-
     public void add(View view) {
         Intent i = new Intent(getApplicationContext(), RecyclerPridat.class);
         i.putExtra("ZID", ZID);

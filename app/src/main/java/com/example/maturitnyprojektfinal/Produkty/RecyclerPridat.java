@@ -1,17 +1,14 @@
 package com.example.maturitnyprojektfinal.Produkty;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.R;
-import com.example.maturitnyprojektfinal.RecyclerZoznamy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,7 +20,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,7 +57,6 @@ public abstract class RecyclerPridat extends AppCompatActivity implements RecAda
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData(recAdapterP);
     }
-
     public void getData(final RecAdapterP recAdapterP) {
         fStore.collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -86,8 +81,9 @@ public abstract class RecyclerPridat extends AppCompatActivity implements RecAda
         i.putExtra("Nazov", Nazov);
         startActivity(i);
     }
-    public void delete(View view) {}  //nemal by tam byť
-    public void add(View view) {} //tiež nebude tam
+    public void add(View view) {
+        Toast.makeText(this, "Stlač produkt pre pridanie", Toast.LENGTH_LONG).show();
+    } //nebude tam
     @Override
     public void onProduktClick(String PID) {
     }
