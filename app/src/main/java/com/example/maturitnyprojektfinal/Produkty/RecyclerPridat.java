@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.maturitnyprojektfinal.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -137,6 +138,10 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                     produkt.put("Pocet",novyPocet);
                     fStore.collection("users").document(userId).collection("zoznamy")
                             .document(ZID).collection("produkty").document().set(produkt);
+                    Toast.makeText(RecyclerPridat.this, "Produkt/y pridany/e", Toast.LENGTH_SHORT).show();
+
+
+
                 }
             }
         });

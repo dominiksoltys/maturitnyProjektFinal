@@ -32,7 +32,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
         LatLng Kaufland = new LatLng(49.001179, 21.228365);
         LatLng KauflandDva = new LatLng(48.987722, 21.263838);
-         LatLng Tesco = new LatLng(48.981293, 21.252381);
+        LatLng KauflandTri = new LatLng(49.095092, 21.110068);
+
+
+
+        LatLng Tesco = new LatLng(48.981293, 21.252381);
+        LatLng TescoDva = new LatLng(49.009015, 21.219536);
+
+
+
+        LatLng Lidl = new LatLng(49.001658, 21.218847);
+        LatLng LidlDva = new LatLng(48.987768, 21.263871);
+        LatLng LidlTri = new LatLng(49.100910, 21.101269);
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +66,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onLocationChanged(Location location) {
                 //userLatLong
+                //userLatLong = new LatLng(48.990478, 21.247214);
                 userLatLong = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.clear();//vyclearuje stary marker
                 mMap.addMarker(new MarkerOptions().position(userLatLong).title("Tvoja poloha"));
                 mMap.addMarker(new MarkerOptions().position(Kaufland).title("Kauf PO"));
                 mMap.addMarker(new MarkerOptions().position(KauflandDva).title("Kaufland PO"));
                 mMap.addMarker(new MarkerOptions().position(Tesco).title("Tesco Stanica"));
+                mMap.addMarker(new MarkerOptions().position(TescoDva).title("Tesco Stanica"));
+                mMap.addMarker(new MarkerOptions().position(Lidl).title("Lidl"));
+                mMap.addMarker(new MarkerOptions().position(LidlDva).title("Lidl sekčov"));
+                mMap.addMarker(new MarkerOptions().position(LidlTri).title("Lidl Sabinov"));
+                mMap.addMarker(new MarkerOptions().position(KauflandTri).title("Kaufland Sabinov"));
                 //mMap.moveCamera(CameraUpdateFactory.newLatLng(userLatLong));
             }
 
