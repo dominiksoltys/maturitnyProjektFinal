@@ -72,7 +72,6 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
         }
 
     }
-
     interface onProduktClickListener {
         void onProduktClick(String PID);
     }

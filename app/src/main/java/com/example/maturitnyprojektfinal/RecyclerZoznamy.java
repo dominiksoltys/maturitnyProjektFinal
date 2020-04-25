@@ -97,21 +97,29 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
     public void add(View view){
             final EditText novyZoznam = new EditText(view.getContext());
             final AlertDialog.Builder novyZoznamDialog = new AlertDialog.Builder(view.getContext());
-            novyZoznamDialog.setTitle("Pridanie zoznamu");
-            novyZoznamDialog.setMessage("Zadajte názov zoznamu");
+            novyZoznamDialog.setTitle("Zadajte názov");
+            novyZoznamDialog.setMessage("Musí mať 3-15 znakov");
             novyZoznamDialog.setView(novyZoznam);
 
             novyZoznamDialog.setPositiveButton("Pridať", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    String novyNazov = novyZoznam.getText().toString().trim();
-                    DocumentReference novyZoznam = fStore.collection("users").document(userId).collection("zoznamy").document();
-                    Map<String,Object> zoznamy = new HashMap<>();
-                    zoznamy.put("Nazov",novyNazov);
-                    zoznamy.put("Cena",0);
-                    zoznamy.put("Pocet",0);
-                    novyZoznam.set(zoznamy);
-                   //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
+                    if (novyZoznam.getText().toString().trim().length()<3){
+                        Toast.makeText(RecyclerZoznamy.this, "Názov musí mať viac ako 3 znaky", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (novyZoznam.getText().toString().trim().length()>15){
+                        Toast.makeText(RecyclerZoznamy.this, "Názov musí mať menej ako 15 znakov", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        String novyNazov = novyZoznam.getText().toString().trim();
+                        DocumentReference novyZoznam = fStore.collection("users").document(userId).collection("zoznamy").document();
+                        Map<String,Object> zoznamy = new HashMap<>();
+                        zoznamy.put("Nazov",novyNazov);
+                        zoznamy.put("Cena",0);
+                        zoznamy.put("Pocet",0);
+                        novyZoznam.set(zoznamy);
+                        //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
+                    }
                 }
             });
 

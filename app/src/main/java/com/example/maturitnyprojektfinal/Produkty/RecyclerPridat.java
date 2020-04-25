@@ -2,11 +2,9 @@ package com.example.maturitnyprojektfinal.Produkty;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,11 +28,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.onProduktClickListener{
+public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onProduktClickListener {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, ZID, Nazov;
 
+    View view;
     RecyclerView recyclerView;
     TextView topNazov;
     ImageView image;
@@ -46,16 +45,16 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
-        ZID=getIntent().getStringExtra("ID");
-        Nazov=getIntent().getStringExtra("Nazov");
+        ZID = getIntent().getStringExtra("ID");
+        Nazov = getIntent().getStringExtra("Nazov");
 
         setContentView(R.layout.activity_recycler_view);
 
+        view = new View(this);
         topNazov = findViewById(R.id.TopNazov);
-        topNazov.setText(Nazov);
+        topNazov.setText("Pridanie");
         recyclerView = findViewById(R.id.recyclerView);
         image = findViewById(R.id.recyclerImage);
-
 
         RecAdapterP recAdapterP = new RecAdapterP(this);
         recyclerView.setAdapter(recAdapterP);
@@ -63,43 +62,33 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         getData(recAdapterP);
     }
 
-    public void getData(final RecAdapterP recAdapterP){
-        fStore.collection("users").document(userId).collection("zoznamy")
-                .document(ZID).collection("produkty")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e!=null){ Log.e("Yeet", e.getMessage()); }
-                else {
-                    ArrayList<Produkt> listik = new ArrayList<>();
-                    for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
-                        String Nazov = snapshot.getString("Nazov");
-                        long Pocet = snapshot.getLong("Pocet");
-
-                        listik.add(new Produkt(snapshot.getId(), Nazov, Pocet));
+    public void getData(final RecAdapterP recAdapterP) {
+        fStore.collection("produkt").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.e("Chyba ", e.getMessage());
+                        } else {
+                            ArrayList<Produkt> listik = new ArrayList<>();
+                            for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                String Nazov = snapshot.getId();
+                                long Pocet = 10;
+                                listik.add(new Produkt(snapshot.getId(), Nazov, Pocet));
+                            }
+                            recAdapterP.setNewProdukt(listik);
+                        }
                     }
-                    recAdapterP.setNewProdukt(listik);
-                }
-            }
-        });
+                });
     }
-
     public void nazad(View view) {
-        startActivity(new Intent(getApplicationContext(), RecyclerZoznamy.class));
-    }
-
-    public void delete(View view){
-        Toast.makeText(this, "Produkt odobraný", Toast.LENGTH_SHORT).show();
-    }
-
-    public void add(View view) {
-        Intent i = new Intent(getApplicationContext(), RecyclerPridat.class);
-        i.putExtra("ZID", ZID);
+        Intent i = new Intent(getApplicationContext(), RecyclerProdukty.class);
+        i.putExtra("ID", ZID);
         i.putExtra("Nazov", Nazov);
         startActivity(i);
     }
+    public void delete(View view) {}  //nemal by tam byť
+    public void add(View view) {} //tiež nebude tam
     @Override
     public void onProduktClick(String PID) {
-        Toast.makeText(this, PID, Toast.LENGTH_LONG).show();
     }
 }
