@@ -2,11 +2,9 @@ package com.example.maturitnyprojektfinal.Produkty;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ParseException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,15 +12,12 @@ import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +39,6 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
     TextView topNazov;
     ImageView image;
     ImageView imageDelete;
-    Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +56,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
         topNazov = findViewById(R.id.TopNazov);
         topNazov.setText("Pridanie");
         imageDelete=findViewById(R.id.imageDelete);
-        //imageDelete.setWillNotDraw(true); toto crashne apku :(
+        //imageDelete.setWillNotDraw(true);    toto crashne apku :(
         recyclerView = findViewById(R.id.recyclerView);
         image = findViewById(R.id.recyclerImage);
 
@@ -136,19 +130,20 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     long novyPocet =Long.parseLong(novyProdukt.getText().toString().trim());
-                    Map<String,Object> produkt = new HashMap<>();
-                    produkt.put("Nazov", PID);
-                    produkt.put("Cena",0);
-                    produkt.put("Pocet",novyPocet);
-                    fStore.collection("users").document(userId).collection("zoznamy")
-                            .document(ZID).collection("produkty").document().set(produkt);
-                    String ye;
-                    if (novyPocet==1) ye="Produkt pridaný";
-                    else ye="Produkty pridané";
-                    Toast.makeText(RecyclerPridat.this, ye, Toast.LENGTH_SHORT).show();
-                }
+                    if (novyPocet<1){
+                        Toast.makeText(RecyclerPridat.this, "Počet musí byť väčší ako 0", Toast.LENGTH_SHORT).show();}
+                    else {Map<String,Object> produkt = new HashMap<>();
+                        produkt.put("Nazov", PID);
+                        produkt.put("Pocet",novyPocet);
+                        fStore.collection("users").document(userId).collection("zoznamy")
+                                .document(ZID).collection("produkty").document().set(produkt);
+                        String ye;
+                        if (novyPocet==1) ye="Produkt pridaný";
+                        else ye="Produkty pridané";
+                        Toast.makeText(RecyclerPridat.this, ye, Toast.LENGTH_SHORT).show();
+                    }}
                 catch (NumberFormatException e){
-                Toast.makeText(RecyclerPridat.this, "Musí byť číslo", Toast.LENGTH_SHORT).show();}
+                Toast.makeText(RecyclerPridat.this, "Musí byť celé číslo", Toast.LENGTH_SHORT).show();}
 
             }
         });

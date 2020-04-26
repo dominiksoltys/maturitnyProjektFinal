@@ -20,8 +20,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -57,7 +55,6 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         topNazov.setText(Nazov);
         recyclerView = findViewById(R.id.recyclerView);
         image = findViewById(R.id.recyclerImage);
-
 
         RecAdapterP recAdapterP = new RecAdapterP(this);
         recyclerView.setAdapter(recAdapterP);

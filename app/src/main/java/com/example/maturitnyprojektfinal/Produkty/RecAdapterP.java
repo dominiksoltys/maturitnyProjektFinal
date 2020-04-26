@@ -56,7 +56,7 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
             TextNazov.setText(produkt.getNazov());
             if (produkt.getPocet()==-1){TextPocet.setText("");}
             else {TextPocet.setText("Pocet: "+String.valueOf(produkt.getPocet()));}
-            imageView.setImageResource(R.drawable.produkt_side);
+            imageView.setImageResource(R.drawable.produkt_side_r);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

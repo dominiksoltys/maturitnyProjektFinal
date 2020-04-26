@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.maturitnyprojektfinal.Produkty.Produkt;
 import com.example.maturitnyprojektfinal.Produkty.RecyclerProdukty;
 import com.example.maturitnyprojektfinal.pojo.Zoznam;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,11 +78,50 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                         double Cena = snapshot.getDouble("Cena");
 
                         listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena));
+                        NajCena(snapshot.getId());
                     }
                     recAdapter.setNewData(listik);
                 }
             }
         });
+    }
+    public String NajCena(String ZID){
+        final double Ceny[] = new double[3];   //0=Kaufland, 1=Lidl, 2=Tesco
+        Arrays.fill(Ceny, 0);
+        fStore.collection("users").document(userId).collection("zoznamy")
+                .document(ZID).collection("produkty")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e!=null){ Log.e("Yeet", e.getMessage()); }
+                        else {
+                            for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
+                                final String Nazov1 = snapshot.getString("Nazov");
+                                final long Pocet = snapshot.getLong("Pocet");
+
+                                fStore.collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                                if (e!=null){ Log.e("Yeet", e.getMessage()); }
+                                                else {
+                                                    for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
+                                                        String Nazov2 = snapshot.getId();
+                                                        if (Nazov1.equals(Nazov2)) {
+                                                            Ceny[0] += (snapshot.getDouble("cenakaufland")*Pocet);
+                                                            Ceny[1] += (snapshot.getDouble("cenalidl")*Pocet);
+                                                            Ceny[2] += (snapshot.getDouble("cenatesco")*Pocet);
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+        Toast.makeText(this, String.valueOf(Ceny[1]), Toast.LENGTH_LONG).show();
+        return null;
     }
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
