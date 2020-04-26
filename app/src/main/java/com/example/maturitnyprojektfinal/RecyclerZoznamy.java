@@ -78,7 +78,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                         double Cena = snapshot.getDouble("Cena");
 
                         listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena));
-                        NajCena(snapshot.getId());
+                        Toast.makeText(RecyclerZoznamy.this, NajCena(snapshot.getId()), Toast.LENGTH_LONG).show();
                     }
                     recAdapter.setNewData(listik);
                 }
@@ -86,6 +86,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         });
     }
     public String NajCena(String ZID){
+        String obchod="";
         final double Ceny[] = new double[3];   //0=Kaufland, 1=Lidl, 2=Tesco
         Arrays.fill(Ceny, 0);
         fStore.collection("users").document(userId).collection("zoznamy")
@@ -106,7 +107,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                                                 else {
                                                     for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
                                                         String Nazov2 = snapshot.getId();
-                                                        if (Nazov1.equals(Nazov2)) {
+                                                        if (Nazov1.trim().equals(Nazov2.trim())) {
                                                             Ceny[0] += (snapshot.getDouble("cenakaufland")*Pocet);
                                                             Ceny[1] += (snapshot.getDouble("cenalidl")*Pocet);
                                                             Ceny[2] += (snapshot.getDouble("cenatesco")*Pocet);
@@ -120,8 +121,13 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                         }
                     }
                 });
-        Toast.makeText(this, String.valueOf(Ceny[1]), Toast.LENGTH_LONG).show();
-        return null;
+        if (Ceny[0]<Ceny[1]&&Ceny[0]<Ceny[2])
+            obchod="Kaufland";
+        else if (Ceny[1]<Ceny[0]&&Ceny[1]<Ceny[2])
+            obchod="Lidl";
+        else if (Ceny[2]<Ceny[0]&&Ceny[2]<Ceny[1])
+            obchod="Tesco";
+        return obchod;
     }
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
