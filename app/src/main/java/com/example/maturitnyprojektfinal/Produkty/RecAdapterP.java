@@ -72,7 +72,7 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
             mDeleteImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mDeleteImage.setImageResource(R.drawable.produkt_side_r);
+                    imageView.setImageResource(R.drawable.produkt_side_r);
                     onProduktClickListener.onDeleteClick(produkt.getPID());
                 }
             });
