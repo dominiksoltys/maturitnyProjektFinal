@@ -68,6 +68,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
                 case "K": imageView.setImageResource(R.drawable.logo_kauf);break;
                 case "L": imageView.setImageResource(R.drawable.logo_lidl);break;
                 case "T":imageView.setImageResource(R.drawable.logo_tesc);break;
+                case "P":imageView.setImageResource(R.drawable.idk);break;
             }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

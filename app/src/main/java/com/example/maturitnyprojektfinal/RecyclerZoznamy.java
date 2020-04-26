@@ -78,7 +78,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                         double CenaK = snapshot.getDouble("CenaK");
                         double CenaT = snapshot.getDouble("CenaT");
                         double CenaL = snapshot.getDouble("CenaL");
-                        double Cena;
+                        double Cena ;
                         String Obchod;
                         if (CenaK<=CenaT&&CenaK<=CenaL){
                             Cena=CenaK;
@@ -89,9 +89,14 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                         }else if (CenaT<=CenaK&&CenaT<=CenaL){
                             Cena=CenaT;
                             Obchod="T";
-                        }else{
+                        }
+                        else{
                             Cena=9999999;
-                            Obchod="Zec mi ric";
+                            Obchod="wut";
+                        }
+                        if(CenaK==0&&CenaL==0&&CenaT==0){
+                            Cena=0;
+                            Obchod="P";
                         }
 
                         listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena, Obchod));
