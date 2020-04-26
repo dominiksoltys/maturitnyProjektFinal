@@ -108,8 +108,10 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                         DocumentReference novyZoznam = fStore.collection("users").document(userId).collection("zoznamy").document();
                         Map<String,Object> zoznamy = new HashMap<>();
                         zoznamy.put("Nazov",novyNazov);
-                        zoznamy.put("Cena",0);
                         zoznamy.put("Pocet",0);
+                        zoznamy.put("CenaK",0);
+                        zoznamy.put("CenaT",0);
+                        zoznamy.put("CenaL",0);
                         novyZoznam.set(zoznamy);
                         //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
                     }
