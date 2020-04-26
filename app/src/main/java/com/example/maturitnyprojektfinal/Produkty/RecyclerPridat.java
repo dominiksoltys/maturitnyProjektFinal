@@ -11,7 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -156,7 +158,9 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                                 Ceny[1] = documentSnapshot.getDouble("CenaL");
                                 Ceny[2] = documentSnapshot.getDouble("CenaT");
                             }
-                        });
+                        }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(Task<DocumentSnapshot> task) {
                         fStore.collection("produkty").document(PID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -171,6 +175,8 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                                 zoznam.put("CenaT", Ceny[2]);
                                 fStore.collection("users").document(userId).collection("zoznamy")
                                         .document(ZID).update(zoznam);
+                            }
+                        });
                             }
                         });
                     }}
