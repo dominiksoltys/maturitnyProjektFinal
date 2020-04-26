@@ -75,9 +75,9 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                     for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
                         String Nazov = snapshot.getString("Nazov");
                         long Pocet = snapshot.getLong("Pocet");
-                        double CenaK = snapshot.getDouble("cenakaufland");
-                        double CenaT = snapshot.getDouble("cenatesco");
-                        double CenaL = snapshot.getDouble("cenalidl");
+                        double CenaK = snapshot.getDouble("CenaK");
+                        double CenaT = snapshot.getDouble("CenaT");
+                        double CenaL = snapshot.getDouble("CenaL");
                         double Cena;
                         String Obchod;
                         if (CenaK<=CenaT&&CenaK<=CenaL){
