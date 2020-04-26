@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.R;
 import com.example.maturitnyprojektfinal.RecyclerZoznamy;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -160,6 +162,7 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         zmenaProduktDialog.create().show();
     }
     public void onDeleteClick(String PID) {
+        final String[] Nazov = new String[1];
         final long[] Pocet = new long[2];
         final double[] Ceny = new double[3];
         fStore.collection("users").document(userId).collection("zoznamy").document(ZID)
@@ -167,8 +170,11 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Pocet[1] = documentSnapshot.getLong("Pocet");
+                Nazov[0] = documentSnapshot.getString("Nazov");
             }
-        });
+        }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(Task<DocumentSnapshot> task) {
         fStore.collection("users").document(userId).collection("zoznamy")
                 .document(ZID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -178,21 +184,31 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
                 Ceny[1] = documentSnapshot.getDouble("CenaL");
                 Ceny[2] = documentSnapshot.getDouble("CenaT");
             }
-        });
-        fStore.collection("produkty").document(PID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(Task<DocumentSnapshot> task) {
+        fStore.collection("produkty").document(Nazov[0]).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Pocet[0]--;
                 Ceny[0] -= (documentSnapshot.getDouble("cenakaufland")*Pocet[1]);
                 Ceny[1] -= (documentSnapshot.getDouble("cenalidl")*Pocet[1]);
                 Ceny[2] -= (documentSnapshot.getDouble("cenatesco")*Pocet[1]);
-                Map<String,Object> zoznam = new HashMap<>();
-                zoznam.put("Pocet", Pocet[0]);
-                zoznam.put("CenaK", Ceny[0]);
-                zoznam.put("CenaL", Ceny[1]);
-                zoznam.put("CenaT", Ceny[2]);
-                fStore.collection("users").document(userId).collection("zoznamy")
-                        .document(ZID).update(zoznam);
+            }
+        }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(Task<DocumentSnapshot> task) {
+                        Map<String,Object> zoznam = new HashMap<>();
+                        zoznam.put("Pocet", Pocet[0]);
+                        zoznam.put("CenaK", Ceny[0]);
+                        zoznam.put("CenaL", Ceny[1]);
+                        zoznam.put("CenaT", Ceny[2]);
+                        fStore.collection("users").document(userId).collection("zoznamy")
+                                .document(ZID).update(zoznam);
+                        }
+                });
+                    }
+            });
             }
         });
 

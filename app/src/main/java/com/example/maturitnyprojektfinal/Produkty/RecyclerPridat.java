@@ -170,13 +170,17 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                                 Ceny[0] += (documentSnapshot.getDouble("cenakaufland")*novyPocet);
                                 Ceny[1] += (documentSnapshot.getDouble("cenalidl")*novyPocet);
                                 Ceny[2] += (documentSnapshot.getDouble("cenatesco")*novyPocet);
-                                Map<String,Object> zoznam = new HashMap<>();
-                                zoznam.put("Pocet", Pocet[0]);
-                                zoznam.put("CenaK", Ceny[0]);
-                                zoznam.put("CenaL", Ceny[1]);
-                                zoznam.put("CenaT", Ceny[2]);
-                                fStore.collection("users").document(userId).collection("zoznamy")
-                                        .document(ZID).update(zoznam);
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(Task<DocumentSnapshot> task) {
+                                        Map<String,Object> zoznam = new HashMap<>();
+                                        zoznam.put("Pocet", Pocet[0]);
+                                        zoznam.put("CenaK", Ceny[0]);
+                                        zoznam.put("CenaL", Ceny[1]);
+                                        zoznam.put("CenaT", Ceny[2]);
+                                        fStore.collection("users").document(userId)
+                                                .collection("zoznamy").document(ZID).update(zoznam);
                             }
                         });
                             }
