@@ -48,6 +48,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
 
         TextView TextNazov, TextPocet, TextCena;
         public ImageView mDeleteImage;
+        ImageView imageView;
 
         public RecViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,13 +56,14 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
             TextPocet = itemView.findViewById(R.id.Pocet_text);
             TextCena = itemView.findViewById(R.id.Cena_text);
             mDeleteImage = itemView.findViewById(R.id.imageDelete);
-
+            imageView = itemView.findViewById(R.id.recyclerImage);
         }
 
         void bindData (final Zoznam zoznam){
             TextNazov.setText(zoznam.getNazov());
             TextPocet.setText("Pocet: "+String.valueOf(zoznam.getPocet()));
             TextCena.setText("Cena: "+String.valueOf(zoznam.getCena()));
+            imageView.setImageResource(R.drawable.logo_kauf);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
