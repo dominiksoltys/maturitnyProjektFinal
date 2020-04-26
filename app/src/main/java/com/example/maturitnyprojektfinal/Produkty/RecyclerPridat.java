@@ -56,7 +56,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
         topNazov = findViewById(R.id.TopNazov);
         topNazov.setText("Pridanie");
         imageDelete=findViewById(R.id.imageDelete);
-        //imageDelete.setWillNotDraw(true);    toto crashne apku :(
+        //imageDelete.setWillNotDraw(true);    //toto crashne apku :(
         recyclerView = findViewById(R.id.recyclerView);
         image = findViewById(R.id.recyclerImage);
 

@@ -75,98 +75,55 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                     for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
                         String Nazov = snapshot.getString("Nazov");
                         long Pocet = snapshot.getLong("Pocet");
-                        double Cena = snapshot.getDouble("Cena");
+                        double Cena = 0;//snapshot.getDouble("Cena");
 
                         listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena));
-                        Toast.makeText(RecyclerZoznamy.this, NajCena(snapshot.getId()), Toast.LENGTH_LONG).show();
                     }
                     recAdapter.setNewData(listik);
                 }
             }
         });
     }
-    public String NajCena(String ZID){
-        String obchod="";
-        final double Ceny[] = new double[3];   //0=Kaufland, 1=Lidl, 2=Tesco
-        Arrays.fill(Ceny, 0);
-        fStore.collection("users").document(userId).collection("zoznamy")
-                .document(ZID).collection("produkty")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if (e!=null){ Log.e("Yeet", e.getMessage()); }
-                        else {
-                            for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
-                                final String Nazov1 = snapshot.getString("Nazov");
-                                final long Pocet = snapshot.getLong("Pocet");
-
-                                fStore.collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                                if (e!=null){ Log.e("Yeet", e.getMessage()); }
-                                                else {
-                                                    for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
-                                                        String Nazov2 = snapshot.getId();
-                                                        if (Nazov1.trim().equals(Nazov2.trim())) {
-                                                            Ceny[0] += (snapshot.getDouble("cenakaufland")*Pocet);
-                                                            Ceny[1] += (snapshot.getDouble("cenalidl")*Pocet);
-                                                            Ceny[2] += (snapshot.getDouble("cenatesco")*Pocet);
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        });
-                            }
-                        }
-                    }
-                });
-        if (Ceny[0]<Ceny[1]&&Ceny[0]<Ceny[2])
-            obchod="Kaufland";
-        else if (Ceny[1]<Ceny[0]&&Ceny[1]<Ceny[2])
-            obchod="Lidl";
-        else if (Ceny[2]<Ceny[0]&&Ceny[2]<Ceny[1])
-            obchod="Tesco";
-        return obchod;
-    }
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
     }
     public void add(View view){
-            final EditText novyZoznam = new EditText(view.getContext());
-            final AlertDialog.Builder novyZoznamDialog = new AlertDialog.Builder(view.getContext());
-            novyZoznamDialog.setTitle("Zadajte názov");
-            novyZoznamDialog.setMessage("Musí mať 3-15 znakov");
-            novyZoznamDialog.setView(novyZoznam);
+        final EditText novyZoznam = new EditText(view.getContext());
+        final AlertDialog.Builder novyZoznamDialog = new AlertDialog.Builder(view.getContext());
+        novyZoznamDialog.setTitle("Zadajte názov");
+        novyZoznamDialog.setMessage("Musí mať 3-15 znakov");
+        novyZoznamDialog.setView(novyZoznam);
 
-            novyZoznamDialog.setPositiveButton("Pridať", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (novyZoznam.getText().toString().trim().length()<3){
-                        Toast.makeText(RecyclerZoznamy.this, "Názov musí mať viac ako 3 znaky", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (novyZoznam.getText().toString().trim().length()>15){
-                        Toast.makeText(RecyclerZoznamy.this, "Názov musí mať menej ako 15 znakov", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        String novyNazov = novyZoznam.getText().toString().trim();
-                        DocumentReference novyZoznam = fStore.collection("users").document(userId).collection("zoznamy").document();
-                        Map<String,Object> zoznamy = new HashMap<>();
-                        zoznamy.put("Nazov",novyNazov);
-                        zoznamy.put("Cena",0);
-                        zoznamy.put("Pocet",0);
-                        novyZoznam.set(zoznamy);
-                        //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
-                    }
+        novyZoznamDialog.setPositiveButton("Pridať", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (novyZoznam.getText().toString().trim().length()<3){
+                    Toast.makeText(RecyclerZoznamy.this, "Názov musí mať viac ako 3 znaky", Toast.LENGTH_SHORT).show();
                 }
-            });
+                else if (novyZoznam.getText().toString().trim().length()>15){
+                    Toast.makeText(RecyclerZoznamy.this, "Názov musí mať menej ako 15 znakov", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    String novyNazov = novyZoznam.getText().toString().trim();
+                    DocumentReference novyZoznam = fStore.collection("users").document(userId).collection("zoznamy").document();
+                    Map<String,Object> zoznamy = new HashMap<>();
+                    zoznamy.put("Nazov",novyNazov);
+                    zoznamy.put("Pocet",0);
+                    zoznamy.put("CenaK",0);
+                    zoznamy.put("CenaT",0);
+                    zoznamy.put("CenaL",0);
+                    novyZoznam.set(zoznamy);
+                    //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
+                }
+            }
+        });
 
-            novyZoznamDialog.setNegativeButton("Zrusit", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {} //zatvorenie dialogu
-            });
-            novyZoznamDialog.create().show();
-        }
+        novyZoznamDialog.setNegativeButton("Zrusit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {} //zatvorenie dialogu
+        });
+        novyZoznamDialog.create().show();
+    }
     @Override
     public void onZoznamClick(String ZID, String Nazov) {
         Intent i = new Intent(getApplicationContext(), RecyclerProdukty.class);

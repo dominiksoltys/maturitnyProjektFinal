@@ -90,6 +90,7 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         i.putExtra("Nazov", Nazov);
         startActivity(i);
 
+
     }
     @Override
     public void onProduktClick(final String PID) {

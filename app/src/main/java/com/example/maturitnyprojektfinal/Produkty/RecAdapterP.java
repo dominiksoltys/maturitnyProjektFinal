@@ -19,6 +19,7 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
     private onProduktClickListener onProduktClickListener;
     public RecAdapterP(onProduktClickListener onProduktClickListener){
         this.onProduktClickListener=onProduktClickListener;
+
     }
     public void setNewProdukt(ArrayList<Produkt> listik){
         this.listik=listik;
