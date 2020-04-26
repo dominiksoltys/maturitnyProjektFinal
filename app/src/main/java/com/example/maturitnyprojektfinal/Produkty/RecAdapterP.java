@@ -57,7 +57,10 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
             TextNazov.setText(produkt.getNazov());
             if (produkt.getPocet()==-1){TextPocet.setText("");}
             else {TextPocet.setText("Pocet: "+String.valueOf(produkt.getPocet()));}
-            imageView.setImageResource(R.drawable.produkt_side_r);
+            if ((produkt.getPID()).equals(produkt.getNazov()))
+                imageView.setImageResource(R.drawable.produkt_side_g);
+            else
+                imageView.setImageResource(R.drawable.produkt_side_o);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +72,7 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
             mDeleteImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    mDeleteImage.setImageResource(R.drawable.produkt_side_r);
                     onProduktClickListener.onDeleteClick(produkt.getPID());
                 }
             });

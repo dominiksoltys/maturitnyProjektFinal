@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.maturitnyprojektfinal.pojo.Zoznam;
+import com.google.gson.internal.ObjectConstructor;
 
 import java.util.ArrayList;
 
@@ -63,8 +64,11 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
             TextNazov.setText(zoznam.getNazov());
             TextPocet.setText("Pocet: "+String.valueOf(zoznam.getPocet()));
             TextCena.setText("Cena: "+String.valueOf(zoznam.getCena()));
-            imageView.setImageResource(R.drawable.logo_kauf);
-
+            switch (zoznam.getObchod()) {
+                case "K": imageView.setImageResource(R.drawable.logo_kauf);break;
+                case "L": imageView.setImageResource(R.drawable.logo_lidl);break;
+                case "T":imageView.setImageResource(R.drawable.logo_tesc);break;
+            }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

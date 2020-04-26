@@ -75,9 +75,26 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                     for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
                         String Nazov = snapshot.getString("Nazov");
                         long Pocet = snapshot.getLong("Pocet");
-                        double Cena = 0;//snapshot.getDouble("Cena");
+                        double CenaK = snapshot.getDouble("cenakaufland");
+                        double CenaT = snapshot.getDouble("cenatesco");
+                        double CenaL = snapshot.getDouble("cenalidl");
+                        double Cena;
+                        String Obchod;
+                        if (CenaK<=CenaT&&CenaK<=CenaL){
+                            Cena=CenaK;
+                            Obchod="K";
+                        }else if (CenaL<=CenaT&&CenaL<=CenaK){
+                            Cena=CenaL;
+                            Obchod="L";
+                        }else if (CenaT<=CenaK&&CenaT<=CenaL){
+                            Cena=CenaT;
+                            Obchod="T";
+                        }else{
+                            Cena=9999999;
+                            Obchod="Zec mi ric";
+                        }
 
-                        listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena));
+                        listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena, Obchod));
                     }
                     recAdapter.setNewData(listik);
                 }
