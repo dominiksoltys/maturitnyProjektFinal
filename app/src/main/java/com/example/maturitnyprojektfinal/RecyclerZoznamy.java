@@ -75,59 +75,14 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                     for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
                         String Nazov = snapshot.getString("Nazov");
                         long Pocet = snapshot.getLong("Pocet");
-                        double Cena = snapshot.getDouble("Cena");
+                        double Cena = 0;//snapshot.getDouble("Cena");
 
                         listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena));
-                        Toast.makeText(RecyclerZoznamy.this, NajCena(snapshot.getId()), Toast.LENGTH_LONG).show();
                     }
                     recAdapter.setNewData(listik);
                 }
             }
         });
-    }
-    public String NajCena(String ZID){
-        String obchod="";
-        final double Ceny[] = new double[3];   //0=Kaufland, 1=Lidl, 2=Tesco
-        Arrays.fill(Ceny, 0);
-        fStore.collection("users").document(userId).collection("zoznamy")
-                .document(ZID).collection("produkty")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if (e!=null){ Log.e("Yeet", e.getMessage()); }
-                        else {
-                            for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
-                                final String Nazov1 = snapshot.getString("Nazov");
-                                final long Pocet = snapshot.getLong("Pocet");
-
-                                fStore.collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                                if (e!=null){ Log.e("Yeet", e.getMessage()); }
-                                                else {
-                                                    for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
-                                                        String Nazov2 = snapshot.getId();
-                                                        if (Nazov1.trim().equals(Nazov2.trim())) {
-                                                            Ceny[0] += (snapshot.getDouble("cenakaufland")*Pocet);
-                                                            Ceny[1] += (snapshot.getDouble("cenalidl")*Pocet);
-                                                            Ceny[2] += (snapshot.getDouble("cenatesco")*Pocet);
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        });
-                            }
-                        }
-                    }
-                });
-        if (Ceny[0]<Ceny[1]&&Ceny[0]<Ceny[2])
-            obchod="Kaufland";
-        else if (Ceny[1]<Ceny[0]&&Ceny[1]<Ceny[2])
-            obchod="Lidl";
-        else if (Ceny[2]<Ceny[0]&&Ceny[2]<Ceny[1])
-            obchod="Tesco";
-        return obchod;
     }
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));

@@ -11,7 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maturitnyprojektfinal.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -129,7 +131,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    long novyPocet =Long.parseLong(novyProdukt.getText().toString().trim());
+                    final long novyPocet =Long.parseLong(novyProdukt.getText().toString().trim());
                     if (novyPocet<1){
                         Toast.makeText(RecyclerPridat.this, "Počet musí byť väčší ako 0", Toast.LENGTH_SHORT).show();}
                     else {Map<String,Object> produkt = new HashMap<>();
@@ -141,7 +143,36 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                         if (novyPocet==1) ye="Produkt pridaný";
                         else ye="Produkty pridané";
                         Toast.makeText(RecyclerPridat.this, ye, Toast.LENGTH_SHORT).show();
-                    }}
+
+                final long[] Pocet = new long[1];
+                final double[] Ceny = new double[3];
+                fStore.collection("users").document(userId).collection("zoznamy")
+                        .document(ZID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Pocet[0] = documentSnapshot.getLong("Pocet");
+                        Ceny[0] = documentSnapshot.getDouble("CenaK");
+                        Ceny[1] = documentSnapshot.getDouble("CenaL");
+                        Ceny[2] = documentSnapshot.getDouble("CenaT");
+                    }
+                });
+                fStore.collection("produkty").document(PID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Pocet[0]++;
+                        Ceny[0] += (documentSnapshot.getDouble("cenakaufland")*novyPocet);
+                        Ceny[1] += (documentSnapshot.getDouble("cenalidl")*novyPocet);
+                        Ceny[2] += (documentSnapshot.getDouble("cenatesco")*novyPocet);
+                        Map<String,Object> zoznam = new HashMap<>();
+                        zoznam.put("Pocet", Pocet[0]);
+                        zoznam.put("CenaK", Ceny[0]);
+                        zoznam.put("CenaL", Ceny[1]);
+                        zoznam.put("CenaT", Ceny[2]);
+                        fStore.collection("users").document(userId).collection("zoznamy")
+                                .document(ZID).update(zoznam);
+                    }
+                });
+            }}
                 catch (NumberFormatException e){
                 Toast.makeText(RecyclerPridat.this, "Musí byť celé číslo", Toast.LENGTH_SHORT).show();}
 
