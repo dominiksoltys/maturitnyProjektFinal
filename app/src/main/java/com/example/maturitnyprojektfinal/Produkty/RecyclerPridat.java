@@ -146,6 +146,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
 
                         final long[] Pocet = new long[1];
                         final double[] Ceny = new double[3];
+
                         fStore.collection("users").document(userId).collection("zoznamy")
                                 .document(ZID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
