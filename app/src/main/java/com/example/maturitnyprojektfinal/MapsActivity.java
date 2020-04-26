@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -67,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onLocationChanged(Location location) {
                 //userLatLong
                 //userLatLong = new LatLng(48.990478, 21.247214);
+
                 userLatLong = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.clear();//vyclearuje stary marker
                 mMap.addMarker(new MarkerOptions().position(userLatLong).title("Tvoja poloha"));
@@ -104,7 +106,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void askLocationPermission() {
-
         Dexter.withActivity(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
@@ -114,12 +115,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 //posledna znama lokacia pre nastavenie defaultneho markera
-
+                try{
                 Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 userLatLong = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
                 mMap.clear();//vyclearuje stary marker
                 mMap.addMarker(new MarkerOptions().position(userLatLong).title("Tvoja poloha"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(userLatLong));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(userLatLong));} catch (Exception e) {
+                    Toast.makeText(MapsActivity.this, "Vase zariadenie ma chybne API,preto nedokazeme zobrazit vasu polohu,ci polohu hypermarketov", Toast.LENGTH_LONG).show();
+                }
 
 
             }
