@@ -127,7 +127,9 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
         final AlertDialog.Builder novyProduktDialog = new AlertDialog.Builder(view.getContext());
         novyProduktDialog.setTitle(PID);
         novyProduktDialog.setMessage("Zadajte počet");
+        novyProdukt.setText("1");
         novyProduktDialog.setView(novyProdukt);
+
 
         novyProduktDialog.setPositiveButton("Pridať", new DialogInterface.OnClickListener() {
             @Override
