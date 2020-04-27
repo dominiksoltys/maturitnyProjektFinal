@@ -89,12 +89,14 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
     }
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(), RecyclerZoznamy.class));
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
     public void add(View view) {
         Intent i = new Intent(getApplicationContext(), RecyclerPridat.class);
         i.putExtra("ID", ZID);
         i.putExtra("Nazov", Nazov);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
     }
     @Override

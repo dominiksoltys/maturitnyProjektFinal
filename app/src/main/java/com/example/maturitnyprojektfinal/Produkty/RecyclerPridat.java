@@ -117,6 +117,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
         i.putExtra("ID", ZID);
         i.putExtra("Nazov", Nazov);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
     public void add(View view) {
         Toast.makeText(this, "Stlač produkt pre pridanie", Toast.LENGTH_LONG).show();

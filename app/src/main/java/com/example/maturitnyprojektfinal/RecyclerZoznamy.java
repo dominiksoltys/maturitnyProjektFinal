@@ -108,6 +108,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
     }
     public void nazad(View view) {
         startActivity(new Intent(getApplicationContext(),drawerActivity.class));
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
     public void add(View view){
         final EditText novyZoznam = new EditText(view.getContext());
@@ -152,6 +153,7 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
         i.putExtra("ID", ZID);
         i.putExtra("Nazov", Nazov);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
     @Override
     public void onDeleteClick(String ZID) {
