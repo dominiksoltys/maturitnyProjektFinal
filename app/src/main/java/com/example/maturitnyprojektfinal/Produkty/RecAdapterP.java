@@ -3,26 +3,33 @@ package com.example.maturitnyprojektfinal.Produkty;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.maturitnyprojektfinal.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHolder> {
+public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHolder> implements Filterable {
 
     ArrayList<Produkt> listik = new ArrayList<>();
+    ArrayList<Produkt> listikall;
     private onProduktClickListener onProduktClickListener;
     public RecAdapterP(onProduktClickListener onProduktClickListener){
         this.onProduktClickListener=onProduktClickListener;
 
     }
+
     public void setNewProdukt(ArrayList<Produkt> listik){
         this.listik=listik;
+        this.listikall = new ArrayList<>(listik);
         notifyDataSetChanged();
     }
     @NonNull
@@ -40,6 +47,43 @@ public class RecAdapterP extends RecyclerView.Adapter<RecAdapterP.ProduktViewHol
     public int getItemCount() {
         return listik.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+
+            List<Produkt> filteredList = new ArrayList<>();
+
+            if(charSequence == null || charSequence.length() == 0){
+                filteredList.addAll(listikall);
+
+            }else {
+                for(Produkt produkt:listikall){
+                    if(produkt.toString().toLowerCase().contains(charSequence.toString().toLowerCase())){
+                        filteredList.add(produkt);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            listik.clear();
+            listik.addAll((Collection<? extends Produkt>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public class ProduktViewHolder extends RecyclerView.ViewHolder{
 
         TextView TextNazov, TextPocet;

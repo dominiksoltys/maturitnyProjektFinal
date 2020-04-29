@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,6 +32,7 @@ import javax.annotation.Nullable;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +46,8 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
     TextView topNazov;
     ImageView image;
     ImageView imageDelete;
+    RecAdapterP recAdapterP = new RecAdapterP(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
         image = findViewById(R.id.recyclerImage);
 
 
-        RecAdapterP recAdapterP = new RecAdapterP(this);
+        //RecAdapterP recAdapterP = new RecAdapterP(this);
         recyclerView.setAdapter(recAdapterP);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData(recAdapterP);
@@ -82,7 +87,8 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
                     for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                         String Nazov = snapshot.getString("Nazov");
                         long Pocet = snapshot.getLong("Pocet");
-                        zoznamlistik.add(new Produkt(snapshot.getId(), Nazov, Pocet)); //Ziskanie udajov zo zoznamu
+                        zoznamlistik.add(new Produkt(snapshot.getId(), Nazov, Pocet));//Ziskanie udajov zo zoznamu
+
                     }
                 }
             }
@@ -112,6 +118,30 @@ public class RecyclerPridat extends AppCompatActivity implements RecAdapterP.onP
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+               recAdapterP.getFilter().filter(newText);
+
+
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
     public void nazad(View view) {
         Intent i = new Intent(getApplicationContext(), RecyclerProdukty.class);
         i.putExtra("ID", ZID);
