@@ -18,9 +18,13 @@ import android.widget.Toast;
 import com.example.maturitnyprojektfinal.Produkty.Produkt;
 import com.example.maturitnyprojektfinal.Produkty.RecyclerProdukty;
 import com.example.maturitnyprojektfinal.pojo.Zoznam;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -74,32 +78,62 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                     ArrayList<Zoznam> listik = new ArrayList<>();
                     for (QueryDocumentSnapshot snapshot:queryDocumentSnapshots) {
                         String Nazov = snapshot.getString("Nazov");
-                        long Pocet = snapshot.getLong("Pocet");
-                        double CenaK = snapshot.getDouble("CenaK");
-                        double CenaT = snapshot.getDouble("CenaT");
-                        double CenaL = snapshot.getDouble("CenaL");
-                        double Cena ;
+                        final long[] Pocet = {0};
+                        final double Ceny[] = new double[3];
+                        Ceny[0] = snapshot.getDouble("CenaK");
+                        Ceny[1] = snapshot.getDouble("CenaL");
+                        Ceny[2] = snapshot.getDouble("CenaT");
+                        final double[] newCeny = {0,0,0};
+                        fStore.collection("users").document(userId).collection("zoznamy").document(snapshot.getId())
+                                .collection("produkty").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                if (e!=null){ Log.e("Yeet", e.getMessage()); }
+                                else {
+                                    for (QueryDocumentSnapshot snap : queryDocumentSnapshots) {
+                                        String PID=snap.getString("Nazov");
+                                        final long Poc=snap.getLong("Pocet");
+                                        Pocet[0]++;
+                                        fStore.collection("produkty").document(PID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                newCeny[0] += (documentSnapshot.getDouble("cenakaufland")*Poc);
+                                                newCeny[1] += (documentSnapshot.getDouble("cenalidl")*Poc);
+                                                newCeny[2] += (documentSnapshot.getDouble("cenatesco")*Poc);
+                                                //toto furt ostane 0, inac vsetko funguje
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                        for (int x=0; x<3; x++){
+                            if (Ceny[x]!=newCeny[x]){   //tu bude aj prepisovanie cien v "Zoznamy"
+                                Ceny[x]=newCeny[x];     //resp. ked toto bude fungovat tak mozno to tam ani celkovo ukladat nebude treba
+                            }
+                        }
+                        double Cena;
                         String Obchod;
-                        if (CenaK<=CenaT&&CenaK<=CenaL){
-                            Cena=CenaK;
+                        if (Ceny[0]<=Ceny[2]&&Ceny[0]<=Ceny[1]){
+                            Cena=Ceny[0];
                             Obchod="K";
-                        }else if (CenaL<=CenaT&&CenaL<=CenaK){
-                            Cena=CenaL;
+                        }else if (Ceny[1]<=Ceny[2]&&Ceny[1]<=Ceny[0]){
+                            Cena=Ceny[1];
                             Obchod="L";
-                        }else if (CenaT<=CenaK&&CenaT<=CenaL){
-                            Cena=CenaT;
+                        }else if (Ceny[2]<=Ceny[0]&&Ceny[2]<=Ceny[1]){
+                            Cena=Ceny[2];
                             Obchod="T";
                         }
                         else{
                             Cena=9999999;
                             Obchod="wut";
                         }
-                        if(CenaK==0&&CenaL==0&&CenaT==0){
+                        if(Ceny[0]==0&&Ceny[1]==0&&Ceny[2]==0){
                             Cena=0;
                             Obchod="P";
                         }
 
-                        listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena, Obchod));
+                        listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet[0], Cena, Obchod));
                     }
                     recAdapter.setNewData(listik);
                 }
