@@ -63,7 +63,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
         void bindData (final Zoznam zoznam){
             TextNazov.setText(zoznam.getNazov());
             TextPocet.setText("Pocet: "+String.valueOf(zoznam.getPocet()));
-            TextCena.setText("Cena: "+String.valueOf(zoznam.getCena()));
+            TextCena.setText("Cena: "+String.valueOf(zoznam.getCena())+" €");
             switch (zoznam.getObchod()) {
                 case "K": imageView.setImageResource(R.drawable.logo_kauf);break;
                 case "L": imageView.setImageResource(R.drawable.logo_lidl);break;

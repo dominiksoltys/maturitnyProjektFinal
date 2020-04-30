@@ -98,7 +98,9 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                             Cena=0;
                             Obchod="P";
                         }
-
+                        Cena*=100;
+                        Cena=Math.round(Cena);
+                        Cena/=100;
                         listik.add(new Zoznam(snapshot.getId(), Nazov, Pocet, Cena, Obchod));
                     }
                     recAdapter.setNewData(listik);
@@ -136,7 +138,6 @@ public class RecyclerZoznamy extends AppCompatActivity implements RecAdapter.onZ
                     zoznamy.put("CenaT",0);
                     zoznamy.put("CenaL",0);
                     novyZoznam.set(zoznamy);
-                    //ApiFuture<WriteResult> result = novyZoznam.set(zoznam);
                 }
             }
         });
