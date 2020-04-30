@@ -24,8 +24,10 @@ public class MainFragment extends Fragment {
         odosli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 editText.setText("");
-                Toast.makeText(getActivity(), "Vdaka za Vas postreh :)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Odoslane", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
