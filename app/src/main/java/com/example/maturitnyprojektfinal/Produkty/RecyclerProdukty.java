@@ -164,6 +164,13 @@ public class RecyclerProdukty extends AppCompatActivity implements RecAdapterP.o
         zmenaProduktDialog.create().show();
     }
     public void onDeleteClick(String PID) {
+        Map<String,Object> zoznam = new HashMap<>();
+                        zoznam.put("Pocet", 1);
+                        zoznam.put("CenaK", 0.4);
+                        zoznam.put("CenaL", 0.4);
+                        zoznam.put("CenaT", 0.3);
+                        fStore.collection("users").document(userId).collection("zoznamy")
+                                .document(ZID).update(zoznam);
 //        final String[] Nazov = new String[1];
 //        final long[] Pocet = new long[2];
 //        final double[] Ceny = new double[3];
